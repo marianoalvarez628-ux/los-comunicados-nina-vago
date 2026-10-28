@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Modelo D — Inmersivo Foto Full-bleed</title>
+  <link rel="stylesheet" href="global.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    .v-label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      letter-spacing: 0.3em;
+    }
+    .immersive-gradient {
+      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.78) 30%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.0) 85%);
+    }
+    .top-shade {
+      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.0) 100%);
+    }
+  </style>
+</head>
+<body>
+  <div class="slide flex" style="padding: 48px 64px;">
+    <!-- Decorative ghost numeral -->
+    <span data-decor aria-hidden="true" class="font-heading italic" style="position:absolute; right:-30px; bottom:-130px; font-size:480px; line-height:1; color:rgba(245,240,232,0.025); pointer-events:none;">D</span>
+
+    <!-- LEFT COLUMN 45% -->
+    <div class="flex flex-col" style="width: 45%; padding-right: 36px;">
+      <span class="chip"><span class="material-icons" style="font-size: 12px;">wallpaper</span>MODELO D · STORIES / VERTICAL</span>
+
+      <h1 class="font-heading italic text-primary" style="font-size: 50px; line-height: 1.02; margin-top: 18px; letter-spacing: -0.01em;">Inmersivo Foto Full-bleed</h1>
+
+      <p class="text-soft" style="font-size: 14px; line-height: 1.6; margin-top: 14px; max-width: 460px;">
+        Una sola fotografía dominante con texto superpuesto estilo revista premium. Pensado para comerciantes con una imagen fuerte: gastronomía, belleza, artesanía.
+      </p>
+
+      <hr class="rule-accent" style="margin-top: 22px;">
+
+      <!-- Características clave -->
+      <div style="margin-top: 22px;">
+        <p class="text-muted font-num" style="font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 14px;">Características clave</p>
+        <ul class="flex flex-col" style="gap: 11px;">
+          <li class="flex" style="gap: 12px; align-items: flex-start;">
+            <span class="material-icons text-accent" style="font-size: 20px; line-height: 1;">wallpaper</span>
+            <span class="text-primary" style="font-size: 13px; line-height: 1.45;">Foto full-bleed 9:16 que ocupa toda la pantalla</span>
+          </li>
+          <li class="flex" style="gap: 12px; align-items: flex-start;">
+            <span class="material-icons text-accent" style="font-size: 20px; line-height: 1;">gradient</span>
+            <span class="text-primary" style="font-size: 13px; line-height: 1.45;">Overlay gradiente negro intenso abajo para legibilidad</span>
+          </li>
+          <li class="flex" style="gap: 12px; align-items: flex-start;">
+            <span class="material-icons text-accent" style="font-size: 20px; line-height: 1;">place</span>
+            <span class="text-primary" style="font-size: 13px; line-height: 1.45;">Ubicación sobre la foto como badge con flecha hacia mapa</span>
+          </li>
+          <li class="flex" style="gap: 12px; align-items: flex-start;">
+            <span class="material-icons text-accent" style="font-size: 20px; line-height: 1;">description</span>
+            <span class="text-primary" style="font-size: 13px; line-height: 1.45;">150 palabras en Source Sans blanco con sombra sutil, justificado a la izquierda</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Chips fila -->
+      <div class="flex flex-wrap" style="gap: 8px; margin-top: 22px;">
+        <span class="chip-neutral">densidad baja</span>
+        <span class="chip-neutral">scroll mínimo</span>
+        <span class="chip-neutral">ideal para una foto hero</span>
+      </div>
+
+      <!-- Footer -->
+      <div class="flex items-center" style="margin-top: auto; padding-top: 24px; gap: 10px;">
+        <span class="font-num text-muted" style="font-size: 11px; letter-spacing: 0.15em;">06 / 09</span>
+        <span class="font-num text-muted" style="font-size: 10px; opacity: 0.5;">·</span>
+        <span class="font-num text-muted" style="font-size: 10px; letter-spacing: 0.1em;">FOLLETO CLASIFICADOS</span>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN 55% -->
+    <div class="relative flex items-center justify-center" style="width: 55%;">
+      <!-- Vertical label -->
+      <span class="v-label font-num text-muted" style="position: absolute; left: 4px; top: 50%; transform: translateY(-50%) rotate(180deg); font-size: 10px;">INMERSIVO · v1</span>
+
+      <!-- Phone -->
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+
+          <!-- Full-screen beauty photo (immersive, no status bar) -->
+          <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7fb83c9216e4.jpg" style="position:absolute; inset:0; width:100%; height:100%; object-fit: cover;" alt="Belleza">
+
+          <!-- Top shade for legibility -->
+          <div class="top-shade" style="position:absolute; top:0; left:0; right:0; height: 120px; pointer-events:none;"></div>
+
+          <!-- Top left: back arrow -->
+          <div style="position: absolute; top: 14px; left: 12px; z-index: 5; width: 22px; height: 22px; border-radius: 50%; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(6px);">
+            <span class="material-icons" style="font-size: 14px; color: var(--primary);">arrow_back</span>
+          </div>
+
+          <!-- Top right: location badge with arrow_forward -->
+          <div style="position: absolute; top: 14px; right: 12px; z-index: 5; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 5px 9px; display: inline-flex; align-items: center; gap: 5px; backdrop-filter: blur(8px);">
+            <span class="material-icons" style="font-size: 12px; color: var(--accent);">place</span>
+            <span style="font-size: 9px; color: var(--primary); font-weight: 600;">Caballito, CABA</span>
+            <span class="material-icons" style="font-size: 11px; color: var(--accent); margin-left: 1px;">arrow_forward</span>
+          </div>
+
+          <!-- Bottom gradient overlay -->
+          <div class="immersive-gradient" style="position: absolute; bottom: 0; left: 0; right: 0; height: 360px; pointer-events: none;"></div>
+
+          <!-- Bottom content -->
+          <div style="position: absolute; bottom: 18px; left: 16px; right: 16px; z-index: 5; text-shadow: 0 1px 4px rgba(0,0,0,0.5);">
+            <!-- Eyebrow -->
+            <p class="font-num" style="font-size: 8px; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 8px;">Servicio destacado</p>
+
+            <!-- Title -->
+            <h2 class="font-heading italic" style="font-size: 22px; color: var(--primary); line-height: 1.1; font-weight: 600;">Belleza &amp; Estilo</h2>
+
+            <!-- Subtitle -->
+            <p style="font-size: 11px; color: var(--accent); margin-top: 4px; font-weight: 600; letter-spacing: 0.02em;">Peluquería · Manicuria · Estética facial</p>
+
+            <!-- Description: 4 lines skeleton simulating 150 words -->
+            <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 5px;">
+              <div style="height: 2px; background: rgba(245,240,232,0.55); width: 96%; border-radius: 1px;"></div>
+              <div style="height: 2px; background: rgba(245,240,232,0.45); width: 88%; border-radius: 1px;"></div>
+              <div style="height: 2px; background: rgba(245,240,232,0.40); width: 72%; border-radius: 1px;"></div>
+              <div style="height: 2px; background: rgba(245,240,232,0.35); width: 55%; border-radius: 1px;"></div>
+            </div>
+
+            <!-- CTA pill -->
+            <div style="margin-top: 16px; display: flex; justify-content: center;">
+              <div style="background: var(--accent); color: var(--bg); border-radius: 999px; padding: 11px 22px; font-size: 12px; font-weight: 800; letter-spacing: 0.04em; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 8px 24px rgba(255,107,92,0.45);">
+                <span>Reservar turno</span>
+                <span class="material-icons" style="font-size: 14px;">arrow_forward</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside data-notes class="hidden">
+    <ul>
+      <li>El modelo apuesta todo a una foto dominante: la calidad de la imagen es el factor crítico.</li>
+      <li>El gradiente inferior garantiza legibilidad del texto sin tapar el sujeto de la foto.</li>
+      <li>La ubicación se resuelve como badge translúcido con flecha, sin romper la inmersión.</li>
+      <li>El CTA coral grande es la única acción visible, clara y sin ambigüedad.</li>
+      <li>Recomendado para comerciantes con producción visual cuidada: gastronomía, belleza, artesanía.</li>
+    </ul>
+  </aside>
+</body>
+</html>

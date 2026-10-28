@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Modelo B — Bento Grid</title>
+  <link rel="stylesheet" href="global.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    .v-label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      letter-spacing: 0.3em;
+    }
+    .skeleton-line {
+      height: 2px;
+      background: rgba(245,240,232,0.18);
+      border-radius: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide flex" style="padding: 48px 64px;">
+    <!-- Decorative ghost numeral -->
+    <span data-decor aria-hidden="true" class="font-heading italic" style="position:absolute; right:-40px; bottom:-120px; font-size:480px; line-height:1; color:rgba(245,240,232,0.025); pointer-events:none;">B</span>
+
+    <!-- LEFT COLUMN 45% -->
+    <div class="flex flex-col" style="width: 45%; padding-right: 36px;">
+      <span class="chip"><span class="material-icons" style="font-size: 12px;">apps</span>MODELO B · MINIMALISTA MODERNO</span>
+
+      <h1 class="font-heading italic text-primary" style="font-size: 56px; line-height: 1.02; margin-top: 18px; letter-spacing: -0.01em;">Bento Grid</h1>
+
+      <p class="text-soft" style="font-size: 14px; line-height: 1.6; margin-top: 14px; max-width: 460px;">
+        Tarjetas asimétricas tipo Pinterest que mezclan foto, texto y ubicación en una grilla modular. Cada card respira con bordes redondeados.
+      </p>
+
+      <hr class="rule-accent" style="margin-top: 22px;">
+
+      <!-- Características clave -->
+      <div style="margin-top: 22px;">
+        <p class="text-muted font-num" style="font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 14px;">Características clave</p>
+        <ul class="flex flex-col" style="gap: 11px;">
+          <li class="flex" style="gap: 12px; align-items: flex-start;">
+            <span class="material-icons text-accent" style="font-size: 20px; line-height: 1;">dashboard</span>
+            <span class="text-primary" style="font-size: 13px; line-height: 1.45;">Grilla bento 2 columnas, cards de alturas variables</span>
+          </li>
+          <li class="flex" style="gap: 12px; align-items: flex-start;">
+            <span class="material-icons text-accent" style="font-size: 20px; line-height: 1;">description</span>
+            <span class="text-primary" style="font-size: 13px; line-height: 1.45;">Texto de 150 palabras en card dedicada, no compite con fotos</span>
+          </li>
+          <li class="flex" style="gap: 12px; align-items: flex-start;">
+            <span class="material-icons text-accent" style="font-size: 20px; line-height: 1;">place</span>
+            <span class="text-primary" style="font-size: 13px; line-height: 1.45;">Ubicación como chip dentro de una card-mapa pequeña</span>
+          </li>
+          <li class="flex" style="gap: 12px; align-items: flex-start;">
+            <span class="material-icons text-accent" style="font-size: 20px; line-height: 1;">photo_library</span>
+            <span class="text-primary" style="font-size: 13px; line-height: 1.45;">6 imágenes distribuidas en cards de distinto tamaño, no todas iguales</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Chips fila -->
+      <div class="flex flex-wrap" style="gap: 8px; margin-top: 22px;">
+        <span class="chip-neutral">densidad media</span>
+        <span class="chip-neutral">scroll medio</span>
+        <span class="chip-neutral">ideal para multi-producto</span>
+      </div>
+
+      <!-- Footer -->
+      <div class="flex items-center" style="margin-top: auto; padding-top: 24px; gap: 10px;">
+        <span class="font-num text-muted" style="font-size: 11px; letter-spacing: 0.15em;">04 / 09</span>
+        <span class="font-num text-muted" style="font-size: 10px; opacity: 0.5;">·</span>
+        <span class="font-num text-muted" style="font-size: 10px; letter-spacing: 0.1em;">FOLLETO CLASIFICADOS</span>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN 55% -->
+    <div class="relative flex items-center justify-center" style="width: 55%;">
+      <!-- Vertical label -->
+      <span class="v-label font-num text-muted" style="position: absolute; left: 4px; top: 50%; transform: translateY(-50%) rotate(180deg); font-size: 10px;">BENTO GRID · v1</span>
+
+      <!-- Phone -->
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" style="display: flex; flex-direction: column;">
+
+          <!-- Status bar -->
+          <div class="flex items-center justify-between" style="padding: 6px 14px 4px;">
+            <span class="font-num" style="font-size: 9px; color: var(--primary-2); font-weight: 600;">09:41</span>
+            <div class="flex items-center" style="gap: 3px;">
+              <span class="material-icons" style="font-size: 10px; color: var(--accent);">signal_cellular_alt</span>
+              <span class="material-icons" style="font-size: 10px; color: var(--accent);">wifi</span>
+              <span class="material-icons" style="font-size: 10px; color: var(--accent);">battery_full</span>
+            </div>
+          </div>
+
+          <!-- Bento grid container -->
+          <div style="padding: 4px 8px 6px; flex: 1; display: flex; flex-direction: column; gap: 6px;">
+
+            <!-- Card 1: hero retail (2-col, 140px) -->
+            <div style="height: 140px; border-radius: 12px; overflow: hidden; position: relative; background: var(--bg-3);">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/895e4fde39ba.jpg" style="width:100%; height:100%; object-fit: cover;" alt="Retail">
+              <span style="position: absolute; top: 8px; right: 8px; background: var(--accent); color: var(--bg); font-size: 8px; font-weight: 800; letter-spacing: 0.08em; padding: 3px 7px; border-radius: 999px;">OFERTA</span>
+            </div>
+
+            <!-- Card 2 + 3 row -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+              <!-- Card 2: beauty (1-col, 80px) -->
+              <div style="height: 80px; border-radius: 12px; overflow: hidden; background: var(--bg-3);">
+                <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7fb83c9216e4.jpg" style="width:100%; height:100%; object-fit: cover;" alt="Belleza">
+              </div>
+              <!-- Card 3: text (1-col, 80px) -->
+              <div style="height: 80px; border-radius: 12px; padding: 9px 10px; background: var(--bg-3); display: flex; flex-direction: column; justify-content: center;">
+                <p class="font-heading" style="font-size: 11px; color: var(--primary); line-height: 1.15; font-weight: 600;">Almacén Don Pedro</p>
+                <div style="margin-top: 6px; display: flex; flex-direction: column; gap: 3px;">
+                  <div class="skeleton-line" style="width: 92%;"></div>
+                  <div class="skeleton-line" style="width: 78%;"></div>
+                  <div class="skeleton-line" style="width: 60%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4: card-map (2-col, 60px) -->
+            <div style="height: 60px; border-radius: 12px; padding: 8px 10px; background: var(--bg-3); display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,107,92,0.18);">
+              <span class="material-icons text-accent" style="font-size: 18px;">place</span>
+              <div style="flex: 1; min-width: 0;">
+                <p style="font-size: 9px; color: var(--primary); font-weight: 700; line-height: 1.2;">Caballito · 8 cuadras</p>
+                <p style="font-size: 7px; color: var(--muted); line-height: 1.2; margin-top: 1px;">Av. Rivadavia 1234</p>
+              </div>
+              <span class="chip-neutral" style="font-size: 7px; padding: 2px 6px; letter-spacing: 0.08em;">VER MAPA</span>
+            </div>
+
+            <!-- Card 5 + 6 row -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+              <!-- Card 5: food (1-col, 80px) -->
+              <div style="height: 80px; border-radius: 12px; overflow: hidden; background: var(--bg-3);">
+                <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/234d79046682.png" style="width:100%; height:100%; object-fit: cover;" alt="Comida">
+              </div>
+              <!-- Card 6: coral block (1-col, 80px) -->
+              <div style="height: 80px; border-radius: 12px; padding: 9px 11px; background: var(--accent); display: flex; flex-direction: column; justify-content: center;">
+                <p class="font-heading italic" style="font-size: 9px; color: var(--bg); line-height: 1.1; opacity: 0.85;">Gancho:</p>
+                <p class="font-heading" style="font-size: 13px; color: var(--bg); font-weight: 700; line-height: 1.1; margin-top: 2px;">Pagá al recibir</p>
+              </div>
+            </div>
+
+            <!-- Bottom mini row: 3 mini-cards (60px) -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px;">
+              <div style="height: 60px; border-radius: 8px; overflow: hidden; background: var(--bg-3);">
+                <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/ff3078d85532.jpg" style="width:100%; height:100%; object-fit: cover;" alt="Plomero">
+              </div>
+              <div style="height: 60px; border-radius: 8px; overflow: hidden; background: var(--bg-3);">
+                <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/3c02bc0d3ea1.jpg" style="width:100%; height:100%; object-fit: cover;" alt="Artesanía">
+              </div>
+              <div style="height: 60px; border-radius: 8px; overflow: hidden; background: var(--bg-3);">
+                <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/beeaba60f2a7.jpg" style="width:100%; height:100%; object-fit: cover;" alt="Local">
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom CTA -->
+          <div style="padding: 4px 10px 10px;">
+            <div style="background: var(--accent); color: var(--bg); border-radius: 999px; padding: 7px 10px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 0.04em;">Ver todos los productos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside data-notes class="hidden">
+    <ul>
+      <li>El layout bento permite jerarquizar productos con pesos visuales distintos sin perder coherencia.</li>
+      <li>La card-mapa integrada evita una pantalla aparte para la ubicación.</li>
+      <li>Funciona mejor cuando hay 6+ productos que requieren orden visual.</li>
+      <li>El comerciante deberá subir fotos cuadradas o aceptar el crop automático del sistema.</li>
+      <li>El bloque coral 'Gancho' es un slot siempre presente para una promoción breve.</li>
+    </ul>
+  </aside>
+</body>
+</html>

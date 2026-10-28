@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Modelo E — Marketplace</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="global.css">
+  <style>
+    .vertical-label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      letter-spacing: 0.22em;
+      font-family: var(--font-num);
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .bullet-row { display:flex; align-items:flex-start; gap:10px; margin-bottom: 9px; }
+    .bullet-row .material-icons { color: var(--accent); font-size: 18px; line-height: 1.45; flex-shrink: 0; }
+    .bullet-row .label { color: var(--accent); font-weight: 700; }
+    .skeleton-line { background: rgba(245,240,232,0.14); border-radius: 2px; height: 5px; margin-bottom: 4px; }
+    .chip-mini {
+      display: inline-flex; align-items: center;
+      padding: 3px 8px; border-radius: 999px;
+      background: rgba(245,240,232,0.08); color: var(--primary-2);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid grid-cols-12 gap-6 h-full" style="height: 608px;">
+    <!-- ============ LEFT 45% ============ -->
+    <div class="col-span-5 flex flex-col">
+      <div class="chip mb-4" style="align-self:flex-start;">MODELO E · COMERCIAL VIBRANTE</div>
+
+      <h1 class="font-heading italic text-primary" style="font-size:52px; line-height:1.02; font-weight:600; margin-top:-2px;">Marketplace</h1>
+
+      <p class="text-soft" style="font-size:14px; line-height:1.5; margin-top:12px; max-width:460px;">
+        Layout denso estilo MercadoLibre / Amazon: badges de oferta, precio destacado, galería de miniaturas, ubicación con mapa, todo en una sola pantalla.
+      </p>
+
+      <hr class="rule-accent" style="margin-top:18px; margin-bottom:22px;">
+
+      <div class="text-muted font-num" style="font-size:10px; letter-spacing:0.22em; text-transform:uppercase;">Características clave</div>
+
+      <div style="margin-top:14px;">
+        <div class="bullet-row">
+          <span class="material-icons">sell</span>
+          <div class="text-primary" style="font-size:13.5px; line-height:1.45;">
+            <span class="label">Precio grande</span> y badges (OFERTA / NUEVO / ENVÍO HOY) prominentes
+          </div>
+        </div>
+        <div class="bullet-row">
+          <span class="material-icons">photo_library</span>
+          <div class="text-primary" style="font-size:13.5px; line-height:1.45;">
+            <span class="label">6 miniaturas</span> en fila horizontal scrollable bajo la foto principal
+          </div>
+        </div>
+        <div class="bullet-row">
+          <span class="material-icons">place</span>
+          <div class="text-primary" style="font-size:13.5px; line-height:1.45;">
+            <span class="label">Card-mapa</span> con calle, distancia y botón CÓMO LLEGAR
+          </div>
+        </div>
+        <div class="bullet-row">
+          <span class="material-icons">description</span>
+          <div class="text-primary" style="font-size:13.5px; line-height:1.45;">
+            <span class="label">150 palabras</span> truncables con leer más / leer menos
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2" style="margin-top:20px;">
+        <span class="chip-mini">densidad muy alta</span>
+        <span class="chip-mini">scroll medio</span>
+        <span class="chip-mini">ideal para retail con precios</span>
+      </div>
+
+      <div class="flex-1"></div>
+
+      <div class="font-num text-muted" style="font-size:10px; letter-spacing:0.22em;">07 / 09</div>
+    </div>
+
+    <!-- ============ RIGHT 55% ============ -->
+    <div class="col-span-7 relative flex items-center justify-center">
+      <!-- vertical label -->
+      <div class="vertical-label" data-decor aria-hidden="true" style="position:absolute; left:6px; top:50%; transform:translateY(-50%) rotate(180deg); writing-mode:vertical-rl;">MARKETPLACE · v1</div>
+
+      <!-- decorative ghost number -->
+      <div data-decor aria-hidden="true" class="font-heading italic" style="position:absolute; right:-12px; top:-8px; font-size:200px; line-height:1; color:rgba(255,107,92,0.05); font-weight:700;">E</div>
+
+      <div class="phone" style="position:relative; z-index:2;">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+
+          <!-- status bar -->
+          <div class="absolute left-0 right-0 flex justify-between items-center" style="top:6px; height:18px; padding:0 14px;">
+            <span class="font-num" style="font-size:9px; color:var(--primary);">09:41</span>
+            <div class="flex gap-1 items-center">
+              <span class="material-icons" style="font-size:10px; color:var(--accent);">signal_cellular_alt</span>
+              <span class="material-icons" style="font-size:10px; color:var(--accent);">wifi</span>
+              <span class="material-icons" style="font-size:10px; color:var(--accent);">battery_full</span>
+            </div>
+          </div>
+
+          <!-- app header -->
+          <div class="absolute left-0 right-0 flex items-center justify-between" style="top:28px; height:26px; padding:0 12px;">
+            <span class="material-icons" style="font-size:14px; color:var(--primary);">arrow_back</span>
+            <span class="font-heading italic" style="font-size:12px; color:var(--primary); font-weight:500;">Almacén Don Pedro</span>
+            <div class="flex gap-2.5">
+              <span class="material-icons" style="font-size:13px; color:var(--primary);">share</span>
+              <span class="material-icons" style="font-size:13px; color:var(--primary);">favorite_border</span>
+            </div>
+          </div>
+
+          <!-- main photo -->
+          <div class="absolute" style="top:58px; left:0; right:0; height:160px;">
+            <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/895e4fde39ba.jpg" alt="Producto retail destacado" style="width:100%; height:100%; object-fit:cover; display:block;">
+            <div style="position:absolute; top:8px; left:8px; background:var(--accent); color:var(--bg); font-size:9px; font-weight:800; padding:3px 7px; border-radius:3px; letter-spacing:0.04em;">OFERTA -20%</div>
+            <div class="chip-neutral" style="position:absolute; bottom:8px; right:8px; padding:2px 7px; font-size:8px; background:rgba(0,0,0,0.55); color:var(--primary);">1/6</div>
+          </div>
+
+          <!-- thumbnail strip -->
+          <div class="absolute flex" style="top:226px; left:12px; right:12px; height:42px; gap:4px; overflow:hidden;">
+            <div style="width:40px; height:40px; border-radius:8px; overflow:hidden; border:2px solid var(--accent); flex-shrink:0;">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/234d79046682.png" alt="" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div style="width:40px; height:40px; border-radius:8px; overflow:hidden; flex-shrink:0;">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/3c02bc0d3ea1.jpg" alt="" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div style="width:40px; height:40px; border-radius:8px; overflow:hidden; flex-shrink:0;">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7fb83c9216e4.jpg" alt="" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div style="width:40px; height:40px; border-radius:8px; background:var(--accent); flex-shrink:0;"></div>
+            <div style="width:40px; height:40px; border-radius:8px; background:var(--primary); opacity:0.55; flex-shrink:0;"></div>
+            <div style="width:40px; height:40px; border-radius:8px; background:var(--bg-3); flex-shrink:0;"></div>
+          </div>
+
+          <!-- price row -->
+          <div class="absolute flex items-center gap-2" style="top:276px; left:12px; right:12px; height:26px;">
+            <span class="font-heading" style="font-size:24px; color:var(--accent); font-weight:700; line-height:1;">$1.250</span>
+            <span class="font-body" style="font-size:11px; color:var(--muted); text-decoration:line-through;">$1.560</span>
+            <span style="background:rgba(92,217,160,0.15); color:var(--ok); font-size:9px; font-weight:700; padding:2px 7px; border-radius:999px; letter-spacing:0.04em; text-transform:uppercase;">AHORRÁ $310</span>
+          </div>
+
+          <!-- title + stars -->
+          <div class="absolute flex items-center gap-1.5" style="top:306px; left:12px; right:12px; height:18px;">
+            <span class="font-heading" style="font-size:14px; color:var(--primary); font-weight:500;">Pack almacen mensual</span>
+            <span class="material-icons" style="font-size:11px; color:var(--accent);">star</span>
+            <span class="material-icons" style="font-size:11px; color:var(--accent);">star</span>
+            <span class="material-icons" style="font-size:11px; color:var(--muted);">star</span>
+            <span class="material-icons" style="font-size:11px; color:var(--muted);">star</span>
+            <span class="material-icons" style="font-size:11px; color:var(--muted);">star</span>
+            <span style="font-size:9px; color:var(--muted);">(124)</span>
+          </div>
+
+          <!-- map card -->
+          <div class="absolute flex items-center gap-2" style="top:330px; left:12px; right:12px; height:60px; background:var(--bg-3); border-radius:8px; padding:0 8px;">
+            <span class="material-icons" style="font-size:20px; color:var(--accent);">place</span>
+            <div class="flex-1" style="min-width:0;">
+              <div style="font-size:10px; color:var(--primary); line-height:1.2; font-weight:500;">Av. Rivadavia 1234, Caballito</div>
+              <div style="font-size:9px; color:var(--muted); line-height:1.2; margin-top:1px;">A 8 cuadras</div>
+            </div>
+            <span style="display:inline-flex; align-items:center; padding:3px 7px; border-radius:999px; background:rgba(245,240,232,0.08); color:var(--primary-2); font-size:8px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;">CÓMO LLEGAR →</span>
+          </div>
+
+          <!-- description skeleton -->
+          <div class="absolute" style="top:398px; left:12px; right:12px;">
+            <div class="skeleton-line" style="width:100%;"></div>
+            <div class="skeleton-line" style="width:92%;"></div>
+            <div class="skeleton-line" style="width:68%;"></div>
+            <div style="font-size:9px; color:var(--accent); font-weight:700; margin-top:4px; letter-spacing:0.04em; text-transform:uppercase;">Leer más</div>
+          </div>
+
+          <!-- bottom CTA -->
+          <div class="absolute flex items-center justify-center" style="bottom:14px; left:12px; right:12px; height:42px; background:var(--accent); border-radius:10px;">
+            <span style="color:var(--bg); font-size:12px; font-weight:800; letter-spacing:0.02em;">Agregar al pedido · $1.250</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<aside data-notes class="hidden">
+  <ul>
+    <li>Modelo de mayor densidad informacional: badges, precio grande, mapa y descripción conviven en una sola pantalla.</li>
+    <li>Ideal para comercios retail donde el precio y la oferta son el diferenciador principal.</li>
+    <li>Ubicación integrada con CTA CÓMO LLEGAR, no solo como badge pasivo.</li>
+    <li>Exige que el comerciante cargue bien precio, descripción y al menos 3 fotos reales.</li>
+    <li>Maneja 6 productos/variantes distintos en la galería scrollable sin saturar.</li>
+  </ul>
+</aside>
+</body>
+</html>

@@ -1,0 +1,178 @@
+/* ===========================================================
+   Folleto Clasificados — 6 Modelos Visuales
+   Paleta: Grafito + Coral
+   Tipografía: Playfair Display (titulares) + Source Sans 3 (cuerpo)
+   =========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Source+Sans+3:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* Palette */
+  --bg:        #14141A;        /* grafito profundo */
+  --bg-2:      #1E1E26;        /* grafito card */
+  --bg-3:      #2A2A33;        /* grafito hover */
+  --primary:   #F5F0E8;        /* blanco hueso */
+  --primary-2: #C9C2B6;        /* blanco hueso apagado */
+  --muted:     #8A8579;        /* gris cálido */
+  --accent:    #FF6B5C;        /* coral */
+  --accent-2:  #FF8C7A;        /* coral claro */
+  --accent-3:  #E0503F;        /* coral oscuro */
+  --warn:      #FFB547;        /* ámbar para badges */
+  --ok:        #5CD9A0;        /* verde suave */
+
+  /* Typography tokens (NO bundled classes — sub-agents compose utilities) */
+  --font-heading: 'Playfair Display', 'Georgia', serif;
+  --font-body:    'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
+  --font-num:     'JetBrains Mono', 'Source Sans 3', monospace;
+
+  --fs-display: 56px;
+  --fs-h1:      40px;
+  --fs-h2:      28px;
+  --fs-h3:      20px;
+  --fs-body:    15px;
+  --fs-small:   12px;
+  --fs-micro:   10px;
+}
+
+/* ---------- Slide canvas ---------- */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #000; }
+body { font-family: var(--font-body); color: var(--primary); }
+
+.slide {
+  width: 1280px;
+  min-height: 720px;
+  max-height: 720px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--primary);
+  position: relative;
+  padding: 56px 64px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+}
+
+/* ---------- Reusable surfaces ---------- */
+.card {
+  background: var(--bg-2);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(245,240,232,0.06);
+}
+.card-accent {
+  background: var(--bg-2);
+  border-radius: 16px;
+  padding: 24px;
+  border-left: 3px solid var(--accent);
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255,107,92,0.12);
+  color: var(--accent);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.chip-neutral {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(245,240,232,0.08);
+  color: var(--primary-2);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.badge-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--font-num);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* ---------- Phone frame (mockup base) ---------- */
+.phone {
+  position: relative;
+  width: 280px;
+  height: 560px;
+  background: #0B0B10;
+  border-radius: 36px;
+  border: 8px solid #2A2A33;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.04);
+  overflow: hidden;
+}
+.phone-notch {
+  position: absolute;
+  top: 8px; left: 50%;
+  transform: translateX(-50%);
+  width: 90px; height: 18px;
+  background: #0B0B10;
+  border-radius: 0 0 14px 14px;
+  z-index: 10;
+}
+.phone-screen {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-2);
+  overflow: hidden;
+}
+
+/* ---------- Accent rules ---------- */
+.rule-accent {
+  height: 2px;
+  width: 48px;
+  background: var(--accent);
+  border: 0;
+  margin: 0;
+}
+.divider {
+  height: 1px;
+  background: rgba(245,240,232,0.08);
+  border: 0;
+  margin: 16px 0;
+}
+
+/* ---------- Utility text colors (no font-size bundled) ---------- */
+.text-primary  { color: var(--primary); }
+.text-muted    { color: var(--muted); }
+.text-soft     { color: var(--primary-2); }
+.text-accent   { color: var(--accent); }
+.text-warn     { color: var(--warn); }
+.text-ok       { color: var(--ok); }
+
+.bg-accent     { background: var(--accent); color: var(--bg); }
+.bg-soft        { background: var(--bg-2); }
+.bg-soft-2      { background: var(--bg-3); }
+
+.font-heading   { font-family: var(--font-heading); }
+.font-body      { font-family: var(--font-body); }
+.font-num       { font-family: var(--font-num); }
+
+/* ---------- Hidden speaker notes container ---------- */
+[data-notes] {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+/* ---------- Material icons sizing helper ---------- */
+.material-icons { vertical-align: middle; }

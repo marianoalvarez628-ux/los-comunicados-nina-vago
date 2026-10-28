@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Modelo F — Periódico Clasificado</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="global.css">
+  <style>
+    .vertical-label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      letter-spacing: 0.22em;
+      font-family: var(--font-num);
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .bullet-row { display:flex; align-items:flex-start; gap:10px; margin-bottom: 9px; }
+    .bullet-row .material-icons { color: var(--accent); font-size: 18px; line-height: 1.45; flex-shrink: 0; }
+    .bullet-row .label { color: var(--accent); font-weight: 700; }
+    .chip-mini {
+      display: inline-flex; align-items: center;
+      padding: 3px 8px; border-radius: 999px;
+      background: rgba(245,240,232,0.08); color: var(--primary-2);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+    }
+    .yellow-badge {
+      display:inline-block;
+      background: var(--warn);
+      color: var(--bg);
+      font-size: 8px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 2px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .col-block { padding: 0 1px; }
+    .col-block .b-title {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 600;
+      line-height: 1.15;
+    }
+    .col-block .b-text {
+      font-size: 8.5px;
+      color: var(--primary-2);
+      line-height: 1.35;
+      margin-top: 4px;
+    }
+    .col-block .b-price {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 5px;
+    }
+    .col-block .b-meta {
+      font-family: var(--font-num);
+      font-size: 8px;
+      color: var(--muted);
+      margin-top: 3px;
+      letter-spacing: 0.02em;
+    }
+    .col-block .b-photo {
+      width: 60px; height: 45px;
+      object-fit: cover;
+      border-radius: 2px;
+      display: block;
+    }
+    .col-block .b-photo-sm {
+      width: 45px; height: 30px;
+      object-fit: cover;
+      border-radius: 2px;
+      display: block;
+    }
+    .thumb-mini {
+      width: 24px; height: 24px;
+      object-fit: cover;
+      border-radius: 2px;
+      border: 1px solid rgba(245,240,232,0.15);
+      flex-shrink: 0;
+    }
+    .thumb-block {
+      width: 24px; height: 24px;
+      border-radius: 2px;
+      border: 1px solid rgba(245,240,232,0.15);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid grid-cols-12 gap-6 h-full" style="height: 608px;">
+    <!-- ============ LEFT 45% ============ -->
+    <div class="col-span-5 flex flex-col">
+      <div class="chip mb-4" style="align-self:flex-start;">MODELO F · COMERCIAL VIBRANTE</div>
+
+      <h1 class="font-heading italic text-primary" style="font-size:44px; line-height:1.02; font-weight:600; margin-top:-2px;">Periódico Clasificado</h1>
+
+      <p class="text-soft" style="font-size:14px; line-height:1.5; margin-top:12px; max-width:460px;">
+        Reinterpreta el aire del clasificado gráfico clásico en mobile: tipografía serif mezclada con sans, badges amarillos, columnas densas, sensación de catálogo impreso digital.
+      </p>
+
+      <hr class="rule-accent" style="margin-top:18px; margin-bottom:22px;">
+
+      <div class="text-muted font-num" style="font-size:10px; letter-spacing:0.22em; text-transform:uppercase;">Características clave</div>
+
+      <div style="margin-top:14px;">
+        <div class="bullet-row">
+          <span class="material-icons">newspaper</span>
+          <div class="text-primary" style="font-size:13.5px; line-height:1.45;">
+            <span class="label">Layout a dos columnas</span> con jerarquía editorial
+          </div>
+        </div>
+        <div class="bullet-row">
+          <span class="material-icons">sell</span>
+          <div class="text-primary" style="font-size:13.5px; line-height:1.45;">
+            <span class="label">Badges amarillos #FFB547</span> para PRECIO / PROMO / ENVÍO
+          </div>
+        </div>
+        <div class="bullet-row">
+          <span class="material-icons">photo_library</span>
+          <div class="text-primary" style="font-size:13.5px; line-height:1.45;">
+            <span class="label">6 miniaturas</span> en fila horizontal con marco fino
+          </div>
+        </div>
+        <div class="bullet-row">
+          <span class="material-icons">place</span>
+          <div class="text-primary" style="font-size:13.5px; line-height:1.45;">
+            <span class="label">Ubicación</span> con inicial de barrio + distancia + horario de atención
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2" style="margin-top:20px;">
+        <span class="chip-mini">densidad alta editorial</span>
+        <span class="chip-mini">scroll medio</span>
+        <span class="chip-mini">ideal para comercios tradicionales</span>
+      </div>
+
+      <div class="flex-1"></div>
+
+      <div class="font-num text-muted" style="font-size:10px; letter-spacing:0.22em;">08 / 09</div>
+    </div>
+
+    <!-- ============ RIGHT 55% ============ -->
+    <div class="col-span-7 relative flex items-center justify-center">
+      <!-- vertical label -->
+      <div class="vertical-label" data-decor aria-hidden="true" style="position:absolute; left:6px; top:50%; transform:translateY(-50%) rotate(180deg); writing-mode:vertical-rl;">PERIÓDICO · v1</div>
+
+      <!-- decorative ghost number -->
+      <div data-decor aria-hidden="true" class="font-heading italic" style="position:absolute; right:-12px; top:-8px; font-size:200px; line-height:1; color:rgba(255,107,92,0.05); font-weight:700;">F</div>
+
+      <div class="phone" style="position:relative; z-index:2;">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+
+          <!-- status bar -->
+          <div class="absolute left-0 right-0 flex justify-between items-center" style="top:6px; height:18px; padding:0 14px;">
+            <span class="font-num" style="font-size:9px; color:var(--primary);">09:41</span>
+            <div class="flex gap-1 items-center">
+              <span class="material-icons" style="font-size:10px; color:var(--accent);">signal_cellular_alt</span>
+              <span class="material-icons" style="font-size:10px; color:var(--accent);">wifi</span>
+              <span class="material-icons" style="font-size:10px; color:var(--accent);">battery_full</span>
+            </div>
+          </div>
+
+          <!-- newspaper masthead -->
+          <div class="absolute left-0 right-0 flex flex-col items-center" style="top:26px; height:34px;">
+            <div class="font-heading italic" style="font-size:16px; color:var(--primary); font-weight:700; letter-spacing:0.04em; line-height:1;">CLASIFICADOS</div>
+            <div class="font-num" style="font-size:8px; color:var(--accent); opacity:0.85; letter-spacing:0.18em; margin-top:2px;">#247 · OCT 2026</div>
+          </div>
+
+          <!-- coral divider -->
+          <div class="absolute" style="top:62px; left:10px; right:10px; height:1px; background:var(--accent);"></div>
+
+          <!-- thin secondary divider -->
+          <div class="absolute" style="top:63.5px; left:10px; right:10px; height:1px; background:rgba(245,240,232,0.05);"></div>
+
+          <!-- 2-column grid of clasificados -->
+          <div class="absolute grid grid-cols-2" style="top:70px; left:10px; right:10px; gap:6px;">
+
+            <!-- LEFT block 1: La Esquina -->
+            <div class="col-block">
+              <div class="b-title">La Esquina</div>
+              <div style="margin-top:3px;"><span class="yellow-badge">OFERTA</span></div>
+              <div class="b-text">Milanesa de la abuela, hecha en el día. Pan rallado puro, panificado por la mañana. Entrega en el barrio sin recargo...</div>
+              <div class="b-price">$1.250</div>
+              <div class="b-meta">Caballito · 8cd · Abierto</div>
+            </div>
+
+            <!-- RIGHT block 1: Frente de Local (foto on top) -->
+            <div class="col-block">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/beeaba60f2a7.jpg" alt="Frente de Local" class="b-photo">
+              <div class="b-title" style="margin-top:4px;">Frente de Local</div>
+              <div style="margin-top:2px;"><span class="yellow-badge">NUEVO</span></div>
+              <div class="b-text" style="margin-top:3px; height:22px; overflow:hidden;">Comercios del barrio con variedad en productos regionales y atención personalizada.</div>
+              <div class="b-price" style="margin-top:3px;">$850</div>
+              <div class="b-meta">Caballito · 5cd</div>
+            </div>
+
+            <!-- LEFT block 2: Artesanías (foto on top) -->
+            <div class="col-block">
+              <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/3c02bc0d3ea1.jpg" alt="Artesanías" class="b-photo">
+              <div class="b-title" style="margin-top:4px;">Artesanías</div>
+              <div style="margin-top:2px;"><span class="yellow-badge">ENVÍO</span></div>
+              <div class="b-text" style="margin-top:3px;">Hecho a mano, piezas únicas de cerámica y tejido.</div>
+              <div class="b-price" style="margin-top:3px;">$3.200</div>
+              <div class="b-meta">San Telmo · 12cd</div>
+            </div>
+
+            <!-- RIGHT block 2: Servicios del Barrio (foto at end) -->
+            <div class="col-block">
+              <div class="b-title">Servicios del Barrio</div>
+              <div style="margin-top:3px;"><span class="yellow-badge">PROMO</span></div>
+              <div class="b-text" style="margin-top:3px; height:32px; overflow:hidden;">Reparaciones y mantenimiento. Atención inmediata en el día, presupuesto sin cargo.</div>
+              <div class="b-price" style="margin-top:3px;">$2.500</div>
+              <div class="flex items-center gap-2" style="margin-top:4px;">
+                <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/ff3078d85532.jpg" alt="Servicios" class="b-photo-sm">
+                <div class="b-meta" style="margin-top:0;">Flores · 6cd</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- mini thumbnails row -->
+          <div class="absolute flex justify-center" style="left:0; right:0; bottom:54px; height:24px; gap:3px;">
+            <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/234d79046682.png" alt="" class="thumb-mini">
+            <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/ff3078d85532.jpg" alt="" class="thumb-mini">
+            <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/895e4fde39ba.jpg" alt="" class="thumb-mini">
+            <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/beeaba60f2a7.jpg" alt="" class="thumb-mini">
+            <div class="thumb-block" style="background:var(--accent);"></div>
+            <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/3c02bc0d3ea1.jpg" alt="" class="thumb-mini">
+            <div class="thumb-block" style="background:var(--primary); opacity:0.5;"></div>
+            <img src="https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/7fb83c9216e4.jpg" alt="" class="thumb-mini">
+          </div>
+
+          <!-- bottom coral bar -->
+          <div class="absolute flex items-center justify-center" style="left:0; right:0; bottom:14px; height:30px; background:var(--accent);">
+            <span style="color:var(--bg); font-size:11px; font-weight:800; letter-spacing:0.06em;">VER TODOS LOS CLASIFICADOS →</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<aside data-notes class="hidden">
+  <ul>
+    <li>Mezcla nostalgia del clasificado impreso con interacción mobile: serif + sans, badges amarillos, columnas densas.</li>
+    <li>Los badges amarillos llaman la atención sin saturar — diferencian OFERTA / NUEVO / ENVÍO / PROMO.</li>
+    <li>La ubicación compacta incluye horario de atención (Abierto / cd = cuadras).</li>
+    <li>Ideal para comercios barriales con clientela recurrente que ya conoce el rubro.</li>
+    <li>La densidad editorial permite mostrar 4 avisos completos por scroll, con 6 miniaturas al pie.</li>
+  </ul>
+</aside>
+</body>
+</html>

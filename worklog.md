@@ -42,3 +42,18 @@ Task ID: ppt-group-3
 Agent: ppt-expert
 Task: Render slides 7-9 (Modelos E, F + comparación).
 Result: 3 slides committed (slide_07.html, slide_08.html, slide_09.html).
+
+---
+Task ID: ppt-iter2
+Agent: ppt-expert
+Task: Render slide_10 (Home) and slide_11 (Categoría detalle).
+
+Work Log:
+- Read brief + global.css + reference slides (02, 03, 07)
+- Wrote slide_10.html, slide_11.html
+
+Stage Summary:
+- 2 new slides committed to /home/z/my-project/download/slides/
+- slide_10 (Pantalla 1 · Home): layout 40/60, columna izquierda con título Playfair italic "Página Principal" + 4 bullets de características + 3 chips de spec; columna derecha con mockup de teléfono mostrando status bar, header "Clasificados" + badge barrio, search bar, label "CATEGORÍAS" y grilla 2×3 de 6 cards (foto circular 52px + nombre Playfair italic 12px + categoría muted 9px + chip coral de conteo) + bottom nav fija con 4 íconos. Cards reproducen el estilo visual de los merchant cards de slide_02.
+- slide_11 (Pantalla 2 · Categoría): layout 40/60, columna izquierda con título "Anuncios por Categoría" + 4 bullets de formato del anuncio + 3 chips de spec; columna derecha con mockup mostrando header con back/tune + fila de chips filtro (Todos/Cerca de mí/Con envío) + 3 ad cards stacked. Cada card: foto circular 30px + nombre + chip de estado (ABIERTO verde / PROMO coral / CERRADO neutral), título Playfair italic 14px (3 palabras), fila de contacto con íconos place + photo_camera, recuadro dashed coral 1px con descripción truncada a 2 líneas + "Leer más →" link, action row con 3 pills (Llamar coral como CTA primario + WhatsApp y Guardar como ghost). El tercer ad card se recorta al final del viewport para sugerir scroll.
+- Decisiones de layout: ajusté dimensiones internas del phone-screen para que las 6 cards de slide_10 y las 3 ad cards de slide_11 entren dentro del viewport 544px sin overflow. Para slide_11 usé -webkit-line-clamp: 2 en la descripción para que cards 1 y 2 muestren 2 líneas + "Leer más" mientras card 3 muestra ~1-2 líneas parciales del recuadro (cumple el requisito del brief).

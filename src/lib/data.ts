@@ -82,6 +82,14 @@ export const categorias: Categoria[] = [
       "Productos en venta, segunda mano, artesanías y trueque entre particulares y comercios.",
     imagen: "/categorias/compra-venta.png",
   },
+  {
+    id: "anuncios",
+    nombre: "Anuncios",
+    short: "Anuncios",
+    descripcion:
+      "Promociones, ofertas, eventos y avisos generales del barrio.",
+    imagen: "/categorias/anuncios.png",
+  },
 ];
 
 // ============================================================

@@ -18,7 +18,7 @@ export default function Home() {
       break;
     case "categoria":
       content = (
-        <CategoriaScreen comercianteId={screen.comercianteId} />
+        <CategoriaScreen categoriaId={screen.categoriaId} />
       );
       break;
     case "detalle":

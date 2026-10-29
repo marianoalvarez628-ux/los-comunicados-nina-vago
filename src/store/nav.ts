@@ -4,7 +4,7 @@ import { create } from "zustand";
 
 export type Screen =
   | { name: "home" }
-  | { name: "categoria"; comercianteId: string }
+  | { name: "categoria"; categoriaId: string }
   | { name: "detalle"; anuncioId: string }
   | { name: "nuevo" }
   | { name: "editor"; anuncioId?: string };

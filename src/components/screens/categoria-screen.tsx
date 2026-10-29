@@ -3,23 +3,24 @@
 import { ArrowLeft, MapPin, Instagram, Phone, ChevronRight, Sliders } from "lucide-react";
 import { useNav } from "@/store/nav";
 import {
-  getComerciante,
-  getAnunciosByComerciante,
+  getCategoria,
+  getAnunciosByCategoria,
   estadoChipColor,
   type Anuncio,
+  type Comerciante,
 } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 type Filtro = "todos" | "cerca" | "envio";
 
-export function CategoriaScreen({ comercianteId }: { comercianteId: string }) {
+export function CategoriaScreen({ categoriaId }: { categoriaId: string }) {
   const { navigate, back } = useNav();
-  const comerciante = getComerciante(comercianteId);
-  const anuncios = getAnunciosByComerciante(comercianteId);
+  const categoria = getCategoria(categoriaId);
+  const anuncios = getAnunciosByCategoria(categoriaId);
   const [filtro, setFiltro] = useState<Filtro>("todos");
 
-  if (!comerciante) return null;
+  if (!categoria) return null;
 
   const filtros: { id: Filtro; label: string }[] = [
     { id: "todos", label: "Todos" },
@@ -38,8 +39,8 @@ export function CategoriaScreen({ comercianteId }: { comercianteId: string }) {
         >
           <ArrowLeft size={20} />
         </button>
-        <h1 className="font-heading italic text-[16px] text-[#F5F0E8] flex-1 text-center">
-          {comerciante.rubro}
+        <h1 className="font-heading italic text-[14px] text-[#F5F0E8] flex-1 text-center px-2 leading-tight">
+          {categoria.short}
         </h1>
         <button
           className="text-[#FF6B5C] active:scale-95 transition-transform p-1"
@@ -49,34 +50,26 @@ export function CategoriaScreen({ comercianteId }: { comercianteId: string }) {
         </button>
       </header>
 
-      {/* Info comerciante banner */}
+      {/* Banner de categoría */}
       <div className="px-4 py-3 flex items-center gap-3 bg-[#1E1E26]/40 border-b border-white/5">
-        <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#FF6B5C]/20 flex-shrink-0">
+        <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
           { }
           <img
-            src={comerciante.avatar}
-            alt={comerciante.nombre}
+            src={categoria.imagen}
+            alt={categoria.nombre}
             className="w-full h-full object-cover"
           />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-heading italic text-[14px] text-[#F5F0E8] truncate">
-            {comerciante.nombre}
+          <p className="font-heading italic text-[14px] text-[#F5F0E8] leading-tight">
+            {categoria.nombre}
           </p>
-          <div className="flex items-center gap-1 text-[10px] text-[#8A8579]">
-            <MapPin size={9} className="text-[#FF6B5C]" />
-            <span className="truncate">{comerciante.barrio}</span>
-          </div>
+          <p className="text-[10px] text-[#8A8579] mt-0.5 line-clamp-2">
+            {categoria.descripcion}
+          </p>
         </div>
-        <span
-          className={cn(
-            "text-[8.5px] px-2 py-0.5 rounded-full border font-semibold tracking-wide",
-            comerciante.abierto
-              ? "bg-[#5CD9A0]/12 text-[#5CD9A0] border-[#5CD9A0]/30"
-              : "bg-[#FF6B5C]/12 text-[#FF6B5C] border-[#FF6B5C]/30"
-          )}
-        >
-          {comerciante.abierto ? "ABIERTO" : "CERRADO"}
+        <span className="text-[9px] text-[#FF6B5C] bg-[#FF6B5C]/12 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">
+          {anuncios.length} {anuncios.length === 1 ? "anuncio" : "anuncios"}
         </span>
       </div>
 
@@ -100,19 +93,40 @@ export function CategoriaScreen({ comercianteId }: { comercianteId: string }) {
 
       {/* Anuncios */}
       <div className="px-4 pt-1 pb-4 flex flex-col gap-3">
-        {anuncios.map((a) => (
-          <AdCard key={a.id} anuncio={a} comerciante={comerciante} onOpen={() =>
-            navigate({ name: "detalle", anuncioId: a.id })
-          } />
-        ))}
+        {anuncios.length === 0 ? (
+          <div className="text-center py-12 text-[#5A554A] text-[12px]">
+            Todavía no hay anuncios en esta categoría.
+            <br />
+            Sé el primero en publicar.
+          </div>
+        ) : (
+          anuncios.map((a) => {
+            const comerciante = getComercianteById(a.comercianteId);
+            if (!comerciante) return null;
+            return (
+              <AdCard
+                key={a.id}
+                anuncio={a}
+                comerciante={comerciante}
+                onOpen={() =>
+                  navigate({ name: "detalle", anuncioId: a.id })
+                }
+              />
+            );
+          })
+        )}
       </div>
 
       <div className="px-4 text-center text-[10px] text-[#5A554A]">
-        Fin de la categoría · {anuncios.length} anuncios publicados
+        Fin de la categoría · {anuncios.length}{" "}
+        {anuncios.length === 1 ? "anuncio publicado" : "anuncios publicados"}
       </div>
     </div>
   );
 }
+
+// Helper local para evitar imports circulares en el map
+import { getComerciante as getComercianteById } from "@/lib/data";
 
 function AdCard({
   anuncio,
@@ -120,11 +134,10 @@ function AdCard({
   onOpen,
 }: {
   anuncio: Anuncio;
-  comerciante: ReturnType<typeof getComerciante>;
+  comerciante: Comerciante;
   onOpen: () => void;
 }) {
   const [expandido, setExpandido] = useState(false);
-  if (!comerciante) return null;
 
   return (
     <article className="bg-[#1E1E26] rounded-xl p-3 border border-white/5 border-l-[3px] border-l-[#FF6B5C]">
@@ -138,12 +151,12 @@ function AdCard({
             className="w-full h-full object-cover"
           />
         </div>
-        <span className="text-[12px] font-semibold text-[#F5F0E8] flex-1">
+        <span className="text-[12px] font-semibold text-[#F5F0E8] flex-1 truncate">
           {comerciante.nombre}
         </span>
         <span
           className={cn(
-            "text-[8px] px-2 py-0.5 rounded-full border font-bold tracking-wide",
+            "text-[8px] px-2 py-0.5 rounded-full border font-bold tracking-wide whitespace-nowrap",
             estadoChipColor(anuncio.estado)
           )}
         >
@@ -184,7 +197,7 @@ function AdCard({
         )}
       </div>
 
-      {/* Recuadro descripción (la pieza clave del formato nuevo) */}
+      {/* Recuadro descripción */}
       <div className="desc-box mt-2.5">
         <p
           className={cn(

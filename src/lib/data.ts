@@ -72,7 +72,7 @@ export const categorias: Categoria[] = [
     descripcion:
       "Electricistas, plomeros, electricidad, belleza, estética y oficios varios.",
     imagen:
-      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/ff3078d85532.jpg",
+      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/970a9d6d99c3.jpg",
   },
   {
     id: "compraventa",
@@ -81,7 +81,7 @@ export const categorias: Categoria[] = [
     descripcion:
       "Productos en venta, segunda mano, artesanías y trueque entre particulares y comercios.",
     imagen:
-      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/3c02bc0d3ea1.jpg",
+      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2d7d9422a521.jpg",
   },
 ];
 

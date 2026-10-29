@@ -80,8 +80,7 @@ export const categorias: Categoria[] = [
     short: "Compra Venta",
     descripcion:
       "Productos en venta, segunda mano, artesanías y trueque entre particulares y comercios.",
-    imagen:
-      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2d7d9422a521.jpg",
+    imagen: "/categorias/compra-venta.png",
   },
 ];
 

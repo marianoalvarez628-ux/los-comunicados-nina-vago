@@ -8,8 +8,6 @@ import {
   ChevronRight,
   ChevronLeft,
   MessageCircle,
-  Bookmark,
-  Share2,
   Eye,
   ThumbsUp,
 } from "lucide-react";
@@ -17,6 +15,7 @@ import { useNav } from "@/store/nav";
 import {
   getAnuncio,
   getComerciante,
+  getCategoria,
   getGaleria,
   estadoChipColor,
 } from "@/lib/data";
@@ -27,7 +26,6 @@ export function DetalleScreen({ anuncioId }: { anuncioId: string }) {
   const { back } = useNav();
   const anuncio = getAnuncio(anuncioId);
   const [imgIndex, setImgIndex] = useState(0);
-  const [guardado, setGuardado] = useState(false);
 
   // Estado local para métricas interactivas (Me gusta)
   const [likes, setLikes] = useState(anuncio?.likes ?? 0);
@@ -38,6 +36,7 @@ export function DetalleScreen({ anuncioId }: { anuncioId: string }) {
   const comerciante = getComerciante(anuncio.comercianteId);
   if (!comerciante) return null;
   const galeria = getGaleria(comerciante.id);
+  const categoria = getCategoria(comerciante.categoriaId);
 
   function toggleLike() {
     if (liked) {
@@ -57,26 +56,20 @@ export function DetalleScreen({ anuncioId }: { anuncioId: string }) {
 
   return (
     <div className="animate-slide-in-right pb-2">
-      {/* Header */}
-      <header className="px-4 pt-2 pb-2 flex items-center justify-between sticky top-0 bg-[#14141A]/95 backdrop-blur z-10">
+      {/* Header — flecha back + nombre de la categoría a la que vuelve (sin guardado) */}
+      <header className="px-4 pt-2 pb-2 flex items-center gap-2 sticky top-0 bg-[#14141A]/95 backdrop-blur z-10">
         <button
           onClick={back}
-          className="text-[#FF6B5C] active:scale-95 transition-transform p-1 -ml-1"
-          aria-label="Volver"
+          className="text-[#FF6B5C] active:scale-95 transition-transform p-1 -ml-1 inline-flex items-center gap-1.5"
+          aria-label={`Volver a ${categoria?.short ?? "categoría"}`}
         >
           <ArrowLeft size={20} />
+          {categoria && (
+            <span className="text-[12px] font-semibold text-[#FF6B5C] leading-none">
+              {categoria.short}
+            </span>
+          )}
         </button>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setGuardado((v) => !v)}
-            className={cn(
-              "p-1 transition-colors",
-              guardado ? "text-[#FF6B5C]" : "text-[#8A8579]"
-            )}
-          >
-            <Bookmark size={18} fill={guardado ? "currentColor" : "none"} />
-          </button>
-        </div>
       </header>
 
       {/* Galería de 4 imágenes */}

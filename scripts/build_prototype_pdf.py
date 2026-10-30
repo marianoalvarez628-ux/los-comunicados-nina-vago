@@ -14,7 +14,7 @@ OUTPUT_PDF = Path("/home/z/my-project/download/folleto_clasificados_prototipo.pd
 SLIDES = [
     ("01-home.png", "Pantalla 1 — Home", "6 categorías con imagen de referencia. Header solo con título 'Clasificados' + buscador + lista de categorías. Categorías: RestoBares, Kioscos, Tiendas, Servicios, Compra Venta y Anuncios."),
     ("02-categoria.png", "Pantalla 2 — Categoría (RestoBares)", "Sin banner de categoría, sin filtros. 4 anuncios por categoría, cada uno con: avatar + nombre + dirección + chip estado en línea; WhatsApp + Instagram debajo; recuadro dashed coral con descripción y Leer más; miniaturas linkeables (hasta 4) a la derecha del Leer más; action row Llamar/WhatsApp/Guardar."),
-    ("03-detalle.png", "Pantalla 3 — Detalle del anuncio", "Galería de 4 imágenes con flechas + thumbs. Datos completos del comercio. Descripción con word count (X/90). CTAs fijos: Llamar ahora / WhatsApp."),
+    ("03-detalle.png", "Pantalla 3 — Detalle del anuncio", "Galería de 4 imágenes con flechas + thumbs. Barra de 3 métricas: Vistas (ojo+contador, no clickeable), Me gusta (pulgar arriba, clickeable), Compartir publicación (ícono WhatsApp share, clickeable). Datos del comercio. Descripción con word count (X/90). CTAs fijos: Llamar ahora / WhatsApp."),
     ("04-editor.png", "Pantalla 4 — Editor (vacío)", "Formulario para publicar anuncio. 4 slots de imagen (1ª = portada). Validaciones en vivo: 3 palabras en título, 90 palabras en descripción."),
     ("05-editor-4-imgs.png", "Pantalla 4 — Editor con 4 imágenes cargadas", "Subidas 4 imágenes (PORTADA + 3). La vista previa en vivo se actualiza mientras escribís. Botón Publicar se habilita solo cuando todo es válido."),
 ]

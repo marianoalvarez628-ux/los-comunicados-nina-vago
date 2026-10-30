@@ -10,7 +10,8 @@ import {
   MessageCircle,
   Bookmark,
   Share2,
-  Star,
+  Eye,
+  ThumbsUp,
 } from "lucide-react";
 import { useNav } from "@/store/nav";
 import {
@@ -28,10 +29,31 @@ export function DetalleScreen({ anuncioId }: { anuncioId: string }) {
   const [imgIndex, setImgIndex] = useState(0);
   const [guardado, setGuardado] = useState(false);
 
+  // Estado local para métricas interactivas (Me gusta)
+  const [likes, setLikes] = useState(anuncio?.likes ?? 0);
+  const [liked, setLiked] = useState(false);
+  const [shared, setShared] = useState(false);
+
   if (!anuncio) return null;
   const comerciante = getComerciante(anuncio.comercianteId);
   if (!comerciante) return null;
   const galeria = getGaleria(comerciante.id);
+
+  function toggleLike() {
+    if (liked) {
+      setLikes((v) => v - 1);
+      setLiked(false);
+    } else {
+      setLikes((v) => v + 1);
+      setLiked(true);
+    }
+  }
+
+  function compartir() {
+    // En prototipo: marcamos como compartido (feedback visual)
+    setShared(true);
+    setTimeout(() => setShared(false), 2000);
+  }
 
   return (
     <div className="animate-slide-in-right pb-2">
@@ -53,9 +75,6 @@ export function DetalleScreen({ anuncioId }: { anuncioId: string }) {
             )}
           >
             <Bookmark size={18} fill={guardado ? "currentColor" : "none"} />
-          </button>
-          <button className="text-[#8A8579] p-1" aria-label="Compartir">
-            <Share2 size={16} />
           </button>
         </div>
       </header>
@@ -135,31 +154,94 @@ export function DetalleScreen({ anuncioId }: { anuncioId: string }) {
         </div>
       </div>
 
-      {/* Título + precio */}
+      {/* Métricas del anuncio — 3 columnas: Vistas / Me gusta / Compartir */}
       <div className="px-4 mt-4">
-        <h1 className="font-heading italic text-[22px] text-[#F5F0E8] leading-tight">
-          {anuncio.titulo}
-        </h1>
-        {anuncio.precio && (
-          <div className="mt-1 flex items-baseline gap-2">
-            <span className="font-heading text-[24px] text-[#FF6B5C] font-semibold">
-              {anuncio.precio}
+        <div className="bg-[#1E1E26] rounded-xl p-2.5 border border-white/5 grid grid-cols-3 gap-1">
+          {/* 1. Vistas — solo contador, no clickeable */}
+          <div className="flex flex-col items-center justify-center py-1.5">
+            <Eye size={18} className="text-[#8A8579] mb-1" />
+            <span className="font-num text-[13px] font-semibold text-[#F5F0E8] leading-none">
+              {anuncio.vistas}
             </span>
-            <span className="text-[10px] text-[#5A554A]">precio referencial</span>
+            <span className="text-[8px] text-[#8A8579] mt-1 tracking-wide uppercase">
+              Vistas
+            </span>
           </div>
-        )}
-        <div className="mt-1.5 flex items-center gap-1">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <Star
-              key={i}
-              size={11}
+
+          {/* 2. Me gusta — clickeable, cambia color y contador */}
+          <button
+            onClick={toggleLike}
+            className={cn(
+              "flex flex-col items-center justify-center py-1.5 rounded-lg transition-colors border",
+              liked
+                ? "bg-[#FF6B5C]/12 border-[#FF6B5C]/30"
+                : "border-transparent active:bg-[#2A2A33]"
+            )}
+            aria-pressed={liked}
+            aria-label="Me gusta"
+          >
+            <ThumbsUp
+              size={18}
               className={cn(
-                i <= 4 ? "text-[#FFB547]" : "text-[#3A3A44]"
+                "mb-1 transition-colors",
+                liked ? "text-[#FF6B5C]" : "text-[#8A8579]"
               )}
-              fill={i <= 4 ? "currentColor" : "none"}
+              fill={liked ? "currentColor" : "none"}
             />
-          ))}
-          <span className="text-[9.5px] text-[#8A8579] ml-1">(124)</span>
+            <span
+              className={cn(
+                "font-num text-[13px] font-semibold leading-none transition-colors",
+                liked ? "text-[#FF6B5C]" : "text-[#F5F0E8]"
+              )}
+            >
+              {likes}
+            </span>
+            <span
+              className={cn(
+                "text-[8px] mt-1 tracking-wide uppercase transition-colors",
+                liked ? "text-[#FF6B5C]" : "text-[#8A8579]"
+              )}
+            >
+              Me gusta
+            </span>
+          </button>
+
+          {/* 3. Compartir publicación — clickeable, ícono WhatsApp share */}
+          <button
+            onClick={compartir}
+            className={cn(
+              "flex flex-col items-center justify-center py-1.5 rounded-lg transition-colors border",
+              shared
+                ? "bg-[#5CD9A0]/12 border-[#5CD9A0]/30"
+                : "border-transparent active:bg-[#2A2A33]"
+            )}
+            aria-label="Compartir publicación"
+          >
+            <MessageCircle
+              size={18}
+              className={cn(
+                "mb-1 transition-colors",
+                shared ? "text-[#5CD9A0]" : "text-[#8A8579]"
+              )}
+              fill={shared ? "currentColor" : "none"}
+            />
+            <span
+              className={cn(
+                "font-num text-[13px] font-semibold leading-none transition-colors",
+                shared ? "text-[#5CD9A0]" : "text-[#F5F0E8]"
+              )}
+            >
+              {anuncio.guardados}
+            </span>
+            <span
+              className={cn(
+                "text-[8px] mt-1 tracking-wide uppercase transition-colors",
+                shared ? "text-[#5CD9A0]" : "text-[#8A8579]"
+              )}
+            >
+              {shared ? "¡Compartido!" : "Compartir"}
+            </span>
+          </button>
         </div>
       </div>
 

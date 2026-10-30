@@ -32,6 +32,10 @@ export type Anuncio = {
   estado: "ABIERTO" | "CERRADO" | "PROMO" | "NUEVO" | "OFERTA";
   descripcion: string; // hasta 90 palabras
   precio?: string;
+  // Métricas del anuncio
+  vistas: number;
+  likes: number;
+  guardados: number;
 };
 
 // ============================================================
@@ -384,6 +388,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Hecha en el día, pan rallado puro, panificado por la mañana. Llevala caliente a casa. Entrega en el barrio sin recargo. Promo: 2×1 los martes y miércoles. Pedí con 24hs de anticipación para entregas grandes.",
     precio: "$1.250",
+    vistas: 557,
+    likes: 50,
+    guardados: 20,
   },
   {
     id: "an-2",
@@ -394,6 +401,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Salteñas y árabes al horno, hechas en el día. Docena $4.500. Pedí con 24hs de anticipación para llevar caliente. Combo familiar disponible. Sabores: carne suave, pollo, jamón y queso, humita.",
     precio: "$4.500",
+    vistas: 564,
+    likes: 56,
+    guardados: 28,
   },
   {
     id: "an-3",
@@ -404,6 +414,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Pan artesanal, milanesa completa con lechuga, tomate, queso y huevo frito. Combo con gaseosa $2.800. Delivery en Caballito y alrededores. Horario: lun a sáb de 11 a 15 y de 19 a 23.",
     precio: "$2.800",
+    vistas: 571,
+    likes: 62,
+    guardados: 37,
   },
   // === Kioscos ===
   {
@@ -415,6 +428,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Combo de productos esenciales: harina, azúcar, aceite, yerba, fideos, arroz, leche en polvo. Pack familiar mensual con 20% de descuento. Retirá en local o pedí delivery en el barrio. Stock renovado semanalmente.",
     precio: "$12.500",
+    vistas: 578,
+    likes: 69,
+    guardados: 48,
   },
   {
     id: "an-5",
@@ -425,6 +441,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Cajas de alfajores, chocolates y caramelos para eventos y cumpleaños. Precios mayoristas a partir de 10 unidades. Marcas nacionales y regionales. Envío sin cargo en el barrio por compras superiores a $15.000.",
     precio: "$8.200",
+    vistas: 585,
+    likes: 76,
+    guardados: 22,
   },
   // === Tiendas ===
   {
@@ -436,6 +455,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Local comercial de 35m² en zona céntrica de Caballito. Frente a avenida con mucho paso. Ideal para emprendimiento gastronómico o retail. Sin gastos comunes. Posibilidad de reformas a cargo del inquilino.",
     precio: "$450.000",
+    vistas: 592,
+    likes: 82,
+    guardados: 32,
   },
   {
     id: "an-7",
@@ -446,6 +468,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Espacio en alquiler por día o semana. Ideal para pop-ups, lanzamientos, eventos pequeños. Capacidad para 30 personas. Incluye baño y cocina. Descuento del 15% por contrataciones de más de 3 días.",
     precio: "$35.000",
+    vistas: 599,
+    likes: 89,
+    guardados: 44,
   },
   // === Servicios ===
   {
@@ -457,6 +482,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Servicio técnico para pérdida de agua, destapación de cañerías y reparación de grifería. Presupuesto sin cargo en el barrio. Atendemos en el día en Caballito, Flores y alrededores. Materiales con garantía.",
     precio: "$2.500",
+    vistas: 606,
+    likes: 96,
+    guardados: 57,
   },
   {
     id: "an-9",
@@ -467,6 +495,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Instalación de tomacorrientes, reparación de tableros y colocación de luminarias. Trabajos con certificado eléctrico. Presupuesto sin cargo. Promo: 10% off en instalaciones completas durante este mes.",
     precio: "$3.200",
+    vistas: 613,
+    likes: 104,
+    guardados: 72,
   },
   {
     id: "an-10",
@@ -477,6 +508,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Corte de cabello profesional para mujer, lavado y peinado final. Productos premium sin amoníaco. Asesoría de estilo según tu rostro y rutina. Turnos por WhatsApp con confirmación previa. Promo primer corte 15% off.",
     precio: "$6.500",
+    vistas: 93,
+    likes: 15,
+    guardados: 10,
   },
   {
     id: "an-11",
@@ -487,6 +521,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Manicuria clásica, esmaltado semipermanente y nail-art básico. Higiene con materiales esterilizados. Esmaltes veganos libres de tóxicos. Promo: 2×1 los martes y miércoles en tratamientos de manicuria.",
     precio: "$4.200",
+    vistas: 100,
+    likes: 8,
+    guardados: 2,
   },
   // === Compra Venta ===
   {
@@ -498,6 +535,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Bufandas, gorros y mantas de lana merino tejidas a mano. Cada pieza es única. Personalización en color y tamaño. Entregas a todo el país por correo. Trabajos especiales para fechas: Navidad, Día de la Madre.",
     precio: "$15.000",
+    vistas: 107,
+    likes: 9,
+    guardados: 3,
   },
   {
     id: "an-13",
@@ -508,6 +548,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Vasijas, tazas y platos hechos a mano con técnicas tradicionales. Cada pieza cocida a 980°C. Ideal para regalar o decorar. Aceptamos pedidos personalizados. Visitá el taller en San Telmo con cita previa.",
     precio: "$7.500",
+    vistas: 114,
+    likes: 11,
+    guardados: 5,
   },
   {
     id: "an-14",
@@ -518,6 +561,9 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Billeteras, cinturones y bolsos en cuero vacuno curtido al vegetal. Costuras a mano. Grabado de iniciales sin cargo. Garantía de por vida. Stock disponible y pedidos especiales con 15 días de anticipación.",
     precio: "$22.000",
+    vistas: 121,
+    likes: 13,
+    guardados: 7,
   },
   // === Anuncios adicionales para completar 4 por categoría ===
   // RestoBares (4to anuncio)
@@ -529,6 +575,9 @@ export const anuncios: Anuncio[] = [
     estado: "ABIERTO",
     descripcion:
       "Menús semanales variados: pollo al horno, wok de vegetales, ensaladas completas. Porciones individuales y familiares. Entrega lunes a viernes de 18 a 21h en Caballito. Promo: pedí 5 viandas y la 6ta va por nuestra cuenta.",
+    vistas: 128,
+    likes: 15,
+    guardados: 10,
   },
   // Kioscos (3ro y 4to anuncio)
   {
@@ -539,6 +588,9 @@ export const anuncios: Anuncio[] = [
     estado: "OFERTA",
     descripcion:
       "Combo de productos esenciales: harina, azúcar, aceite, yerba, fideos, arroz, leche en polvo. Pack familiar mensual con 20% de descuento. Retirá en local o pedí delivery en el barrio. Stock renovado semanalmente.",
+    vistas: 135,
+    likes: 17,
+    guardados: 5,
   },
   {
     id: "an-17",
@@ -548,6 +600,9 @@ export const anuncios: Anuncio[] = [
     estado: "PROMO",
     descripcion:
       "Globos, serpentinas, velas y golosinas para fiestas infantiles. Pack armado desde $8.000 según cantidad de chicos. Repartimos el día del evento sin cargo en Flores y Caballito. Reservá con 7 días de anticipación.",
+    vistas: 142,
+    likes: 19,
+    guardados: 7,
   },
   // Tiendas (3ro y 4to anuncio)
   {
@@ -558,6 +613,9 @@ export const anuncios: Anuncio[] = [
     estado: "NUEVO",
     descripcion:
       "Vestidos, camisas y accesorios en algodón y lino. Talles del 38 al 48. Probá en el local o pedí por WhatsApp con envío a domicilio. Promo lanzamiento: 15% off en toda la colección durante octubre.",
+    vistas: 149,
+    likes: 22,
+    guardados: 11,
   },
   {
     id: "an-19",
@@ -567,6 +625,9 @@ export const anuncios: Anuncio[] = [
     estado: "NUEVO",
     descripcion:
       "Local comercial de 35m² en zona céntrica de Caballito. Frente a avenida con mucho paso. Ideal para emprendimiento gastronómico o retail. Sin gastos comunes. Posibilidad de reformas a cargo del inquilino.",
+    vistas: 156,
+    likes: 24,
+    guardados: 14,
   },
   // Compra Venta (4to anuncio)
   {
@@ -577,6 +638,9 @@ export const anuncios: Anuncio[] = [
     estado: "PROMO",
     descripcion:
       "Anillos, cadenas, aros y pulseras en plata 925. Grabado sin cargo hasta 10 caracteres. Limpieza y pulido gratis de por vida. Promo: 2×1 en aros cargados todos los viernes. Visita con cita previa a nuestro local en San Telmo.",
+    vistas: 100,
+    likes: 8,
+    guardados: 2,
   },
   // Anuncios (4 anuncios para esta categoría nueva)
   {
@@ -587,6 +651,9 @@ export const anuncios: Anuncio[] = [
     estado: "ABIERTO",
     descripcion:
       "Saludamos comercios, eventos y cumpleaños del barrio en el aire. Llamanos o escribinos por WhatsApp para participar del próximo programa. Transmisión los sábados de 11 a 13h por Instagram en vivo.",
+    vistas: 107,
+    likes: 9,
+    guardados: 3,
   },
   {
     id: "an-22",
@@ -596,6 +663,9 @@ export const anuncios: Anuncio[] = [
     estado: "NUEVO",
     descripcion:
       "Llevá lo que ya no usás y llevate algo nuevo para vos. Ropa, libros, juguetes, herramientas. Entrada libre y gratuita. Último sábado de cada mes de 15 a 19h en Plaza Flores. Coordiná por WhatsApp si querés participar como expositor.",
+    vistas: 114,
+    likes: 11,
+    guardados: 5,
   },
   {
     id: "an-23",
@@ -605,6 +675,9 @@ export const anuncios: Anuncio[] = [
     estado: "ABIERTO",
     descripcion:
       "Buscamos ropa de abrigo y mantas para donar a familias del barrio. Acercá tus donaciones de lunes a viernes de 10 a 18h. Coordiná por WhatsApp si necesitás que pasemos a buscar. Todas las donaciones son bienvenidas.",
+    vistas: 121,
+    likes: 13,
+    guardados: 7,
   },
   {
     id: "an-24",
@@ -614,6 +687,9 @@ export const anuncios: Anuncio[] = [
     estado: "PROMO",
     descripcion:
       "Taller de costura y reparación de ropa. Traé esa prenda que no usás y aprendé a darle una segunda vida. Materiales incluidos. Cupos limitados, anotate por WhatsApp. Todos los miércoles de 18 a 20h en nuestra sede.",
+    vistas: 128,
+    likes: 15,
+    guardados: 10,
   },
 ];
 

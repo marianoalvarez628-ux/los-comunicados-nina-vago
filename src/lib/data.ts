@@ -200,6 +200,86 @@ export const comerciantes: Comerciante[] = [
     telefono: "+54 11 5588-2200",
     abierto: false,
   },
+  // === Comerciantes adicionales para que cada categoría tenga 4 anuncios ===
+  {
+    id: "rotiseria-mama",
+    nombre: "Rotisería Mamá",
+    avatar:
+      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d16caf7fdb4c.webp",
+    categoriaId: "restobares",
+    barrio: "Caballito, CABA",
+    direccion: "Rivadavia 2300, Caballito",
+    instagram: "@rotiseria.mama",
+    whatsapp: "+54 11 5544-9988",
+    telefono: "+54 11 5544-9988",
+    abierto: true,
+  },
+  {
+    id: "maxikiosco-tito",
+    nombre: "Maxikiosco Tito",
+    avatar:
+      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/895e4fde39ba.jpg",
+    categoriaId: "kioscos",
+    barrio: "Flores, CABA",
+    direccion: "Av. Directorio 1200, Flores",
+    instagram: "@maxikiosco.tito",
+    whatsapp: "+54 11 5533-1100",
+    telefono: "+54 11 5533-1100",
+    abierto: true,
+  },
+  {
+    id: "boutique-malena",
+    nombre: "Boutique Malena",
+    avatar:
+      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/20a5319b965d.jpeg",
+    categoriaId: "tiendas",
+    barrio: "Caballito, CABA",
+    direccion: "Av. Rivadavia 4800, Caballito",
+    instagram: "@boutique.malena",
+    whatsapp: "+54 11 5511-2233",
+    telefono: "+54 11 5511-2233",
+    abierto: true,
+  },
+  {
+    id: "joyeria-luz",
+    nombre: "Joyería Luz",
+    avatar:
+      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/52ce36d21e15.jpeg",
+    categoriaId: "compraventa",
+    barrio: "San Telmo, CABA",
+    direccion: "Defensa 1100, San Telmo",
+    instagram: "@joyeria.luz",
+    whatsapp: "+54 11 5522-3344",
+    telefono: "+54 11 5522-3344",
+    abierto: false,
+  },
+  // === Comerciantes para la categoría nueva Anuncios ===
+  {
+    id: "radio-barrial",
+    nombre: "Radio Barrial",
+    avatar:
+      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d0ad512486e7.jpg",
+    categoriaId: "anuncios",
+    barrio: "Caballito, CABA",
+    direccion: "Av. Rivadavia 1500, Caballito",
+    instagram: "@radio.barrial",
+    whatsapp: "+54 11 5566-1212",
+    telefono: "+54 11 5566-1212",
+    abierto: true,
+  },
+  {
+    id: "cooperativa-vientos",
+    nombre: "Cooperativa Vientos",
+    avatar:
+      "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/beeaba60f2a7.jpg",
+    categoriaId: "anuncios",
+    barrio: "Flores, CABA",
+    direccion: "Av. Carabobo 800, Flores",
+    instagram: "@coope.vientos",
+    whatsapp: "+54 11 5577-9988",
+    telefono: "+54 11 5577-9988",
+    abierto: true,
+  },
 ];
 
 // Galería de imágenes por comerciante (4 imágenes para el detalle)
@@ -251,6 +331,42 @@ export const galeriaImagenes: Record<string, string[]> = {
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/f1b22e517d60.jpg",
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/52a823c1841b.jpg",
     "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/3c02bc0d3ea1.jpg",
+  ],
+  "rotiseria-mama": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d16caf7fdb4c.webp",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/234d79046682.png",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d0ad512486e7.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d16caf7fdb4c.webp",
+  ],
+  "maxikiosco-tito": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/895e4fde39ba.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/9bf2627834af.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/895e4fde39ba.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/9bf2627834af.jpg",
+  ],
+  "boutique-malena": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/20a5319b965d.jpeg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/52ce36d21e15.jpeg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/beeaba60f2a7.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/20a5319b965d.jpeg",
+  ],
+  "joyeria-luz": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/52ce36d21e15.jpeg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/20a5319b965d.jpeg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/52ce36d21e15.jpeg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/20a5319b965d.jpeg",
+  ],
+  "radio-barrial": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d0ad512486e7.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/234d79046682.png",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d0ad512486e7.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/234d79046682.png",
+  ],
+  "cooperativa-vientos": [
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/beeaba60f2a7.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/52ce36d21e15.jpeg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/beeaba60f2a7.jpg",
+    "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/52ce36d21e15.jpeg",
   ],
 };
 
@@ -402,6 +518,102 @@ export const anuncios: Anuncio[] = [
     descripcion:
       "Billeteras, cinturones y bolsos en cuero vacuno curtido al vegetal. Costuras a mano. Grabado de iniciales sin cargo. Garantía de por vida. Stock disponible y pedidos especiales con 15 días de anticipación.",
     precio: "$22.000",
+  },
+  // === Anuncios adicionales para completar 4 por categoría ===
+  // RestoBares (4to anuncio)
+  {
+    id: "an-15",
+    comercianteId: "rotiseria-mama",
+    titulo: "Viandas saludables",
+    imagen: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d16caf7fdb4c.webp",
+    estado: "ABIERTO",
+    descripcion:
+      "Menús semanales variados: pollo al horno, wok de vegetales, ensaladas completas. Porciones individuales y familiares. Entrega lunes a viernes de 18 a 21h en Caballito. Promo: pedí 5 viandas y la 6ta va por nuestra cuenta.",
+  },
+  // Kioscos (3ro y 4to anuncio)
+  {
+    id: "an-16",
+    comercianteId: "almacen-don-pedro",
+    titulo: "Pack almacén mensual",
+    imagen: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/895e4fde39ba.jpg",
+    estado: "OFERTA",
+    descripcion:
+      "Combo de productos esenciales: harina, azúcar, aceite, yerba, fideos, arroz, leche en polvo. Pack familiar mensual con 20% de descuento. Retirá en local o pedí delivery en el barrio. Stock renovado semanalmente.",
+  },
+  {
+    id: "an-17",
+    comercianteId: "maxikiosco-tito",
+    titulo: "Promo cumpleaños",
+    imagen: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/9bf2627834af.jpg",
+    estado: "PROMO",
+    descripcion:
+      "Globos, serpentinas, velas y golosinas para fiestas infantiles. Pack armado desde $8.000 según cantidad de chicos. Repartimos el día del evento sin cargo en Flores y Caballito. Reservá con 7 días de anticipación.",
+  },
+  // Tiendas (3ro y 4to anuncio)
+  {
+    id: "an-18",
+    comercianteId: "boutique-malena",
+    titulo: "Colección primavera verano",
+    imagen: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/20a5319b965d.jpeg",
+    estado: "NUEVO",
+    descripcion:
+      "Vestidos, camisas y accesorios en algodón y lino. Talles del 38 al 48. Probá en el local o pedí por WhatsApp con envío a domicilio. Promo lanzamiento: 15% off en toda la colección durante octubre.",
+  },
+  {
+    id: "an-19",
+    comercianteId: "frente-local",
+    titulo: "Alquiler de local",
+    imagen: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/beeaba60f2a7.jpg",
+    estado: "NUEVO",
+    descripcion:
+      "Local comercial de 35m² en zona céntrica de Caballito. Frente a avenida con mucho paso. Ideal para emprendimiento gastronómico o retail. Sin gastos comunes. Posibilidad de reformas a cargo del inquilino.",
+  },
+  // Compra Venta (4to anuncio)
+  {
+    id: "an-20",
+    comercianteId: "joyeria-luz",
+    titulo: "Catálogo plata 925",
+    imagen: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/52ce36d21e15.jpeg",
+    estado: "PROMO",
+    descripcion:
+      "Anillos, cadenas, aros y pulseras en plata 925. Grabado sin cargo hasta 10 caracteres. Limpieza y pulido gratis de por vida. Promo: 2×1 en aros cargados todos los viernes. Visita con cita previa a nuestro local en San Telmo.",
+  },
+  // Anuncios (4 anuncios para esta categoría nueva)
+  {
+    id: "an-21",
+    comercianteId: "radio-barrial",
+    titulo: "Programa en vivo",
+    imagen: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d0ad512486e7.jpg",
+    estado: "ABIERTO",
+    descripcion:
+      "Saludamos comercios, eventos y cumpleaños del barrio en el aire. Llamanos o escribinos por WhatsApp para participar del próximo programa. Transmisión los sábados de 11 a 13h por Instagram en vivo.",
+  },
+  {
+    id: "an-22",
+    comercianteId: "cooperativa-vientos",
+    titulo: "Feria de trueque",
+    imagen: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/beeaba60f2a7.jpg",
+    estado: "NUEVO",
+    descripcion:
+      "Llevá lo que ya no usás y llevate algo nuevo para vos. Ropa, libros, juguetes, herramientas. Entrada libre y gratuita. Último sábado de cada mes de 15 a 19h en Plaza Flores. Coordiná por WhatsApp si querés participar como expositor.",
+  },
+  {
+    id: "an-23",
+    comercianteId: "radio-barrial",
+    titulo: "Aviso solidario",
+    imagen: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d0ad512486e7.jpg",
+    estado: "ABIERTO",
+    descripcion:
+      "Buscamos ropa de abrigo y mantas para donar a familias del barrio. Acercá tus donaciones de lunes a viernes de 10 a 18h. Coordiná por WhatsApp si necesitás que pasemos a buscar. Todas las donaciones son bienvenidas.",
+  },
+  {
+    id: "an-24",
+    comercianteId: "cooperativa-vientos",
+    titulo: "Taller gratuito",
+    imagen: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/beeaba60f2a7.jpg",
+    estado: "PROMO",
+    descripcion:
+      "Taller de costura y reparación de ropa. Traé esa prenda que no usás y aprendé a darle una segunda vida. Materiales incluidos. Cupos limitados, anotate por WhatsApp. Todos los miércoles de 18 a 20h en nuestra sede.",
   },
 ];
 

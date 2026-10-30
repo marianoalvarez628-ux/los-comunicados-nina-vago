@@ -7,7 +7,6 @@ import {
   Phone,
   ChevronRight,
   Sliders,
-  MessageCircle,
 } from "lucide-react";
 import { useNav } from "@/store/nav";
 import {
@@ -105,8 +104,8 @@ function AdCard({
 
   return (
     <article className="bg-[#1E1E26] rounded-xl p-2.5 border border-white/5 border-l-[3px] border-l-[#FF6B5C]">
-      {/* Header: avatar + nombre + dirección + chip estado, en línea */}
-      <div className="flex items-center gap-2 mb-1.5">
+      {/* Header: avatar + nombre + dirección + instagram + chip estado, en línea */}
+      <div className="flex items-center gap-2 mb-2">
         <div className="w-7 h-7 rounded-full overflow-hidden border border-[#FF6B5C]/20 flex-shrink-0">
           { }
           <img
@@ -129,33 +128,23 @@ function AdCard({
               {anuncio.estado}
             </span>
           </div>
-          <div className="flex items-center gap-1 mt-0.5 text-[9px] text-[#8A8579] truncate">
-            <MapPin size={8} className="text-[#FF6B5C] flex-shrink-0" />
-            <span className="truncate">{comerciante.direccion}</span>
+          {/* Dirección + Instagram en la misma línea */}
+          <div className="flex items-center gap-2 mt-0.5 text-[9px] truncate">
+            <span className="inline-flex items-center gap-1 text-[#8A8579] min-w-0">
+              <MapPin size={8} className="text-[#FF6B5C] flex-shrink-0" />
+              <span className="truncate">{comerciante.direccion}</span>
+            </span>
+            {comerciante.instagram && (
+              <a
+                href="#"
+                className="inline-flex items-center gap-1 text-[#C9C2B6] hover:text-[#FF6B5C] transition-colors flex-shrink-0"
+              >
+                <Instagram size={9} className="text-[#FF6B5C]" />
+                <span className="text-[8.5px]">{comerciante.instagram}</span>
+              </a>
+            )}
           </div>
         </div>
-      </div>
-
-      {/* Sub-header: WhatsApp + Instagram debajo del nombre del comerciante */}
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 mb-2 pl-9 text-[9px]">
-        {comerciante.whatsapp && (
-          <a
-            href="#"
-            className="inline-flex items-center gap-1 text-[#C9C2B6] hover:text-[#5CD9A0] transition-colors"
-          >
-            <MessageCircle size={9} className="text-[#5CD9A0]" />
-            <span>{comerciante.whatsapp}</span>
-          </a>
-        )}
-        {comerciante.instagram && (
-          <a
-            href="#"
-            className="inline-flex items-center gap-1 text-[#C9C2B6] hover:text-[#FF6B5C] transition-colors"
-          >
-            <Instagram size={9} className="text-[#FF6B5C]" />
-            <span>{comerciante.instagram}</span>
-          </a>
-        )}
       </div>
 
       {/* Recuadro descripción + miniaturas al lado de "Leer más" */}

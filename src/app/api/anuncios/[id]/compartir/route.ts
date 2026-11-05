@@ -3,6 +3,7 @@
 
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { registrarCompartido } from "@/lib/metricas";
 
 export async function POST(
   request: Request,
@@ -23,6 +24,7 @@ export async function POST(
       where: { id },
       data: { compartidos: { increment: 1 } },
     });
+    registrarCompartido(id).catch((e) => console.error("Error métrica:", e));
 
     return NextResponse.json({
       compartidos: anuncio.compartidos + 1,

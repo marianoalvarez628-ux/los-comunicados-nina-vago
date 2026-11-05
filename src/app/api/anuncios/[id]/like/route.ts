@@ -4,6 +4,7 @@
 
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { registrarLike, registrarQuitaLike } from "@/lib/metricas";
 
 export async function POST(
   request: Request,
@@ -59,6 +60,7 @@ export async function POST(
         where: { id },
         data: { likes: { decrement: 1 } },
       });
+      registrarQuitaLike(id).catch((e) => console.error("Error métrica:", e));
       return NextResponse.json({ liked: false, likes: anuncio.likes - 1 });
     } else {
       // Agregar like
@@ -72,6 +74,7 @@ export async function POST(
         where: { id },
         data: { likes: { increment: 1 } },
       });
+      registrarLike(id).catch((e) => console.error("Error métrica:", e));
       return NextResponse.json({ liked: true, likes: anuncio.likes + 1 });
     }
   } catch (error) {

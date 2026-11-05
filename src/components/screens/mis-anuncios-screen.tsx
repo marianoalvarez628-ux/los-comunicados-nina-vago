@@ -17,10 +17,12 @@ import {
   HelpCircle,
   Clock,
   TrendingUp,
+  BarChart3,
 } from "lucide-react";
 import { useNav } from "@/store/nav";
 import { useAuth } from "@/store/auth";
 import { cn } from "@/lib/utils";
+import { MetricasDashboard } from "./metricas-dashboard";
 
 type MineAnuncio = {
   id: string;
@@ -78,6 +80,7 @@ export function MisAnunciosScreen() {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null); // id del anuncio en acción
   const [toast, setToast] = useState<{ msg: string; tone: "ok" | "err" } | null>(null);
+  const [metricasAnuncioId, setMetricasAnuncioId] = useState<string | null>(null);
 
   const cargar = useCallback(async () => {
     setLoading(true);
@@ -310,11 +313,20 @@ export function MisAnunciosScreen() {
                 onTogglePausa={togglePausa}
                 onCambiarEstado={cambiarEstado}
                 onOpen={() => navigate({ name: "home" })} // TODO: navegar al detalle cuando esté conectado a DB
+                onVerMetricas={(id) => setMetricasAnuncioId(id)}
               />
             ))}
           </div>
         )}
       </div>
+
+      {/* Modal de métricas detalladas */}
+      {metricasAnuncioId && (
+        <MetricasDashboard
+          anuncioId={metricasAnuncioId}
+          onClose={() => setMetricasAnuncioId(null)}
+        />
+      )}
     </div>
   );
 }
@@ -353,6 +365,7 @@ function AnuncioCard({
   onTogglePausa,
   onCambiarEstado,
   onOpen,
+  onVerMetricas,
 }: {
   anuncio: MineAnuncio;
   actionLoading: string | null;
@@ -361,6 +374,7 @@ function AnuncioCard({
   onTogglePausa: (a: MineAnuncio) => void;
   onCambiarEstado: (a: MineAnuncio) => void;
   onOpen: () => void;
+  onVerMetricas: (id: string) => void;
 }) {
   const diasRestantes = anuncio.diasRestantes;
   const porVencer = diasRestantes <= 3 && diasRestantes >= 0 && !anuncio.vencido;
@@ -445,6 +459,15 @@ function AnuncioCard({
           <Metric icon={<MessageCircle size={11} />} value={anuncio.metricas.compartidos} label="Compart." tone="ok" />
           <Metric icon={<TrendingUp size={11} />} value={anuncio.reportes} label="Reportes" tone={anuncio.reportes > 0 ? "warn" : "muted"} />
         </div>
+
+        {/* Botón ver métricas detalladas */}
+        <button
+          onClick={() => onVerMetricas(anuncio.id)}
+          className="mt-2 w-full bg-[#1E1E26] border border-[#FF6B5C]/20 hover:bg-[#FF6B5C]/5 rounded-md py-1.5 px-2 flex items-center justify-center gap-1.5 transition-colors text-[9.5px] font-medium text-[#FF6B5C]"
+        >
+          <BarChart3 size={11} />
+          Ver métricas detalladas (14 días)
+        </button>
 
         {/* Aviso de reportes */}
         {anuncio.reportes > 0 && (

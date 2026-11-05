@@ -3,6 +3,7 @@
 
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { registrarVista } from "@/lib/metricas";
 
 function getUserIdFromCookie(request: Request): string | null {
   return request.headers
@@ -55,6 +56,9 @@ export async function GET(
         data: { vistas: { increment: 1 } },
       })
       .catch((e) => console.error("Error incrementando vistas:", e));
+
+    // Registrar vista diaria para métricas
+    registrarVista(id).catch((e) => console.error("Error en métrica diaria:", e));
 
     return NextResponse.json({
       anuncio: {

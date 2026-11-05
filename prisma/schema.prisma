@@ -61,6 +61,7 @@ model Comerciante {
   categoria  Categoria  @relation(fields: [categoriaId], references: [id])
   anuncios   Anuncio[]
   usuarios   Usuario[]  @relation("ComercianteUsuarios") // si un usuario es comerciante
+  preferencias PreferenciaNotificaciones?
 
   // Métricas agregadas (denormalizadas para performance)
   totalVistas    Int @default(0)
@@ -109,6 +110,7 @@ model Anuncio {
   guardadosUsers Guardado[]
   vistasLog   Vista[]
   reportes    Reporte[]
+  metricasDiarias MetricaDiaria[]
 
   @@index([categoriaId, oculto, pausado, venceEn]) // para query de anuncios visibles por categoría
   @@index([comercianteId])
@@ -248,4 +250,40 @@ model PalabraProhibida {
   id        String   @id @default(cuid())
   palabra   String   @unique
   createdAt DateTime @default(now())
+}
+
+// ============================================================
+// MÉTRICA DIARIA — agregación por anuncio por día
+// Se actualiza al dispararse eventos (vista, like, compartir)
+// ============================================================
+model MetricaDiaria {
+  id           String   @id @default(cuid())
+  anuncioId    String
+  fecha        DateTime // día (sin hora, 00:00 UTC)
+  vistas       Int      @default(0)
+  likes        Int      @default(0)
+  compartidos  Int      @default(0)
+  guardados    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  anuncio Anuncio @relation(fields: [anuncioId], references: [id], onDelete: Cascade)
+
+  @@unique([anuncioId, fecha])
+  @@index([anuncioId, fecha])
+}
+
+// ============================================================
+// PREFERENCIA NOTIFICACIONES — boletín diario por WhatsApp
+// ============================================================
+model PreferenciaNotificaciones {
+  id              String   @id @default(cuid())
+  comercianteId   String   @unique
+  boletinDiario   Boolean  @default(true)
+  horaBoletin     Int      @default(9) // hora del día (0-23)
+  ultimoBoletinEn DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  comerciante Comerciante @relation(fields: [comercianteId], references: [id], onDelete: Cascade)
 }

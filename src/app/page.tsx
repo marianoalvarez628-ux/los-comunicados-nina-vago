@@ -7,6 +7,7 @@ import { DetalleScreen } from "@/components/screens/detalle-screen";
 import { EditorScreen } from "@/components/screens/editor-screen";
 import { RegistroComercianteScreen } from "@/components/screens/registro-screen";
 import { MisAnunciosScreen } from "@/components/screens/mis-anuncios-screen";
+import { AdminScreen } from "@/components/screens/admin-screen";
 import { StatusBar } from "@/components/shared/status-bar";
 import { BottomNav } from "@/components/shared/bottom-nav";
 import { AuthOverlay } from "@/components/auth/auth-overlay";
@@ -32,6 +33,9 @@ export default function Home() {
       break;
     case "mis-anuncios":
       content = <MisAnunciosScreen />;
+      break;
+    case "admin":
+      content = <AdminScreen />;
       break;
     case "nuevo":
     case "editor":

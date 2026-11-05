@@ -8,6 +8,7 @@ export type Screen =
   | { name: "detalle"; anuncioId: string }
   | { name: "registro" }
   | { name: "mis-anuncios" }
+  | { name: "admin" }
   | { name: "nuevo" }
   | { name: "editor"; anuncioId?: string };
 

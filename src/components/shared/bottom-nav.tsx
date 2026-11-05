@@ -1,36 +1,41 @@
 "use client";
 
-import { Search, Bookmark, Home, Plus, LogIn } from "lucide-react";
+import { Search, Bookmark, Home, Plus, LogIn, ShieldAlert } from "lucide-react";
 import { useNav } from "@/store/nav";
 import { useAuth } from "@/store/auth";
 import { cn } from "@/lib/utils";
 
-type Tab = "home" | "search" | "guardados" | "perfil";
+type Tab = "home" | "search" | "guardados" | "perfil" | "admin";
 
 export function BottomNav() {
   const { screen, navigate, resetHome } = useNav();
   const { usuario, openLogin } = useAuth();
+
+  const isAdmin = usuario?.rol === "ADMIN";
 
   const activeTab: Tab =
     screen.name === "home"
       ? "home"
       : screen.name === "nuevo" || screen.name === "editor" || screen.name === "registro" || screen.name === "mis-anuncios"
       ? "perfil"
+      : screen.name === "admin"
+      ? "admin"
       : screen.name === "categoria" || screen.name === "detalle"
       ? "search"
       : "home";
 
   function handlePublicarClick() {
     if (!usuario) {
-      // No logueado → abrir modal de login
       openLogin();
     } else if (usuario.rol === "VISITANTE") {
-      // Logueado como visitante → necesita registrarse como comerciante
       navigate({ name: "registro" });
     } else if (usuario.rol === "COMERCIANTE" || usuario.rol === "ADMIN") {
-      // Ya es comerciante → ir al panel de Mis Anuncios (desde ahí puede publicar nuevo)
       navigate({ name: "mis-anuncios" });
     }
+  }
+
+  function handleAdminClick() {
+    navigate({ name: "admin" });
   }
 
   function handleGuardadosClick() {
@@ -39,6 +44,7 @@ export function BottomNav() {
     }
   }
 
+  // Si es admin, reemplazar "Guardados" por "Admin"
   const items: { id: Tab; label: string; icon: typeof Home; action: () => void }[] = [
     { id: "home", label: "Inicio", icon: Home, action: resetHome },
     {
@@ -47,12 +53,19 @@ export function BottomNav() {
       icon: Search,
       action: () => {},
     },
-    {
-      id: "guardados",
-      label: "Guardados",
-      icon: Bookmark,
-      action: handleGuardadosClick,
-    },
+    isAdmin
+      ? {
+          id: "admin",
+          label: "Admin",
+          icon: ShieldAlert,
+          action: handleAdminClick,
+        }
+      : {
+          id: "guardados",
+          label: "Guardados",
+          icon: Bookmark,
+          action: handleGuardadosClick,
+        },
     {
       id: "perfil",
       label: usuario ? (usuario.rol === "VISITANTE" ? "Publicar" : "Panel") : "Ingresar",

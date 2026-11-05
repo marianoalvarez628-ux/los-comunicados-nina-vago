@@ -236,6 +236,7 @@ model Reporte {
   anuncio    Anuncio @relation(fields: [anuncioId], references: [id], onDelete: Cascade)
   reportante Usuario @relation(fields: [reportanteId], references: [id])
 
+  @@unique([anuncioId, reportanteId])
   @@index([anuncioId, resuelto])
   @@index([reportanteId])
 }

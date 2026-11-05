@@ -1,13 +1,15 @@
 "use client";
 
-import { Phone, Search, Bookmark, User, Home, Plus } from "lucide-react";
+import { Phone, Search, Bookmark, User, Home, Plus, LogIn } from "lucide-react";
 import { useNav } from "@/store/nav";
+import { useAuth } from "@/store/auth";
 import { cn } from "@/lib/utils";
 
 type Tab = "home" | "search" | "guardados" | "perfil";
 
 export function BottomNav() {
   const { screen, navigate, resetHome } = useNav();
+  const { usuario, openLogin, logout } = useAuth();
 
   const activeTab: Tab =
     screen.name === "home"
@@ -26,12 +28,27 @@ export function BottomNav() {
       icon: Search,
       action: () => {},
     },
-    { id: "guardados", label: "Guardados", icon: Bookmark, action: () => {} },
+    {
+      id: "guardados",
+      label: "Guardados",
+      icon: Bookmark,
+      action: () => {
+        if (!usuario) {
+          openLogin();
+        }
+      },
+    },
     {
       id: "perfil",
-      label: "Publicar",
-      icon: Plus,
-      action: () => navigate({ name: "nuevo" }),
+      label: usuario ? "Publicar" : "Ingresar",
+      icon: usuario ? Plus : LogIn,
+      action: () => {
+        if (usuario) {
+          navigate({ name: "nuevo" });
+        } else {
+          openLogin();
+        }
+      },
     },
   ];
 

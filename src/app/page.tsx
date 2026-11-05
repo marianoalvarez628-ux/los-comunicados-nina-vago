@@ -7,6 +7,7 @@ import { DetalleScreen } from "@/components/screens/detalle-screen";
 import { EditorScreen } from "@/components/screens/editor-screen";
 import { StatusBar } from "@/components/shared/status-bar";
 import { BottomNav } from "@/components/shared/bottom-nav";
+import { AuthOverlay } from "@/components/auth/auth-overlay";
 
 export default function Home() {
   const { screen } = useNav();
@@ -44,6 +45,9 @@ export default function Home() {
           <BottomNav />
         </div>
       </div>
+
+      {/* Overlay de auth (login / OTP) */}
+      <AuthOverlay />
     </main>
   );
 }

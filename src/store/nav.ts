@@ -6,6 +6,7 @@ export type Screen =
   | { name: "home" }
   | { name: "categoria"; categoriaId: string }
   | { name: "detalle"; anuncioId: string }
+  | { name: "registro" }
   | { name: "nuevo" }
   | { name: "editor"; anuncioId?: string };
 

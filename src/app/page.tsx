@@ -5,6 +5,7 @@ import { HomeScreen } from "@/components/screens/home-screen";
 import { CategoriaScreen } from "@/components/screens/categoria-screen";
 import { DetalleScreen } from "@/components/screens/detalle-screen";
 import { EditorScreen } from "@/components/screens/editor-screen";
+import { RegistroComercianteScreen } from "@/components/screens/registro-screen";
 import { StatusBar } from "@/components/shared/status-bar";
 import { BottomNav } from "@/components/shared/bottom-nav";
 import { AuthOverlay } from "@/components/auth/auth-overlay";
@@ -24,6 +25,9 @@ export default function Home() {
       break;
     case "detalle":
       content = <DetalleScreen anuncioId={screen.anuncioId} />;
+      break;
+    case "registro":
+      content = <RegistroComercianteScreen />;
       break;
     case "nuevo":
     case "editor":

@@ -1,8 +1,13 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// ============================================================
+// Folleto Clasificados — Prisma Schema
+// ============================================================
+// Modelos según las reglas de negocio confirmadas:
+//   - 6 categorías (3 con duración 30 días, 2 con duración 5 días)
+//   - Comerciantes con WhatsApp + dirección + categoría
+//   - Anuncios con máximo 5 activos por comerciante
+//   - Métricas: vistas, likes, guardados, compartidos
+//   - Reportes y moderación con sistema de strikes
+// ============================================================
 
 generator client {
   provider = "prisma-client-js"
@@ -13,20 +18,233 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// ============================================================
+// CATEGORÍAS — 6 categorías fijas del folleto
+// ============================================================
+model Categoria {
+  id          String    @id @default(cuid())
+  slug        String    @unique // "restobares", "kioscos", etc.
+  nombre      String    // "RestoBares & Comidas al paso"
+  short       String    // "RestoBares" — versión corta para headers
+  descripcion String
+  imagen      String    // URL o path a la imagen de referencia
+  duracionDias Int       // 30 para categorías estables, 5 para Compra Venta / Anuncios
+  orden       Int       @default(0) // para mostrar en el orden correcto en Home
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  comerciantes Comerciante[]
+  anuncios     Anuncio[]
 }
 
-model Post {
+// ============================================================
+// COMERCIANTE — el que publica anuncios
+// ============================================================
+model Comerciante {
+  id          String    @id @default(cuid())
+  nombre      String    // nombre del comercio
+  avatar      String    // URL de la foto de perfil
+  categoriaId String    // categoría principal (la que pidió al registrarse)
+  barrio      String    // "Caballito, CABA"
+  direccion   String    // "Av. Rivadavia 1234, Caballito"
+  instagram   String?   // opcional
+  whatsapp    String    // número verificado por OTP
+  telefono    String?   // opcional, default = whatsapp
+  abierto     Boolean   @default(true) // estado operacional
+  verificado  Boolean   @default(false) // true después de 3 anuncios sin reportes
+  strikes     Int       @default(0) // sistema de strikes (3 = ban temporal)
+  baneado     Boolean   @default(false)
+  banHasta    DateTime? // si tiene ban temporal, fecha de fin
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  categoria  Categoria  @relation(fields: [categoriaId], references: [id])
+  anuncios   Anuncio[]
+  usuarios   Usuario[]  @relation("ComercianteUsuarios") // si un usuario es comerciante
+
+  // Métricas agregadas (denormalizadas para performance)
+  totalVistas    Int @default(0)
+  totalLikes     Int @default(0)
+  totalGuardados Int @default(0)
+}
+
+// ============================================================
+// ANUNCIO — la unidad publicable
+// ============================================================
+model Anuncio {
+  id            String    @id @default(cuid())
+  comercianteId String
+  categoriaId   String    // categoría del anuncio (puede diferir de la del comerciante)
+  titulo        String    // máximo 3 palabras (validación en frontend)
+  imagen        String    // imagen principal (URL o path)
+  estado        String    @default("ABIERTO") // ABIERTO | CERRADO | PROMO
+  descripcion   String    // hasta 90 palabras
+  precio        String?   // opcional
+
+  // Fechas de publicación y vencimiento
+  publicadoEn  DateTime  @default(now())
+  venceEn      DateTime  // calculado al publicar según categoría
+  republicado  Boolean   @default(false) // si fue republicado al menos una vez
+  republicadoEn DateTime?
+
+  // Métricas del anuncio
+  vistas       Int       @default(0)
+  likes        Int       @default(0)
+  guardados    Int       @default(0)
+  compartidos  Int       @default(0)
+
+  // Moderación
+  reportesCount Int      @default(0)
+  oculto        Boolean  @default(false) // oculto automático tras 3 reportes
+  enRevision    Boolean  @default(false) // marcado por admin
+  pausado       Boolean  @default(false) // pausado por comerciante o admin
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  comerciante Comerciante @relation(fields: [comercianteId], references: [id], onDelete: Cascade)
+  categoria   Categoria   @relation(fields: [categoriaId], references: [id])
+  galeria     ImagenAnuncio[]
+  likesUsers  Like[]
+  guardadosUsers Guardado[]
+  vistasLog   Vista[]
+  reportes    Reporte[]
+
+  @@index([categoriaId, oculto, pausado, venceEn]) // para query de anuncios visibles por categoría
+  @@index([comercianteId])
+}
+
+// ============================================================
+// IMAGEN ANUNCIO — hasta 4 imágenes por anuncio
+// ============================================================
+model ImagenAnuncio {
   id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
+  anuncioId String
+  url       String
+  orden     Int      @default(0) // 0 = portada
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  anuncio Anuncio @relation(fields: [anuncioId], references: [id], onDelete: Cascade)
+
+  @@index([anuncioId, orden])
+}
+
+// ============================================================
+// USUARIO — visitante registrado o comerciante
+// ============================================================
+model Usuario {
+  id          String    @id @default(cuid())
+  whatsapp    String    @unique // número verificado por OTP
+  email       String?   // opcional
+  nombre      String?   // opcional para visitantes, obligatorio para comerciantes
+  barrio      String?   // opcional para visitantes, obligatorio para comerciantes
+  ciudad      String?   // opcional para visitantes, obligatorio para comerciantes
+  rol         String    @default("VISITANTE") // VISITANTE | COMERCIANTE | ADMIN
+  comercianteId String? // si es COMERCIANTE, link al comerciante
+  radioCuadras Int      @default(10) // radio por defecto para cercanía
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  comerciante   Comerciante? @relation("ComercianteUsuarios", fields: [comercianteId], references: [id])
+  likes         Like[]
+  guardados     Guardado[]
+  reportesHechos Reporte[]
+  otpCodes      OtpCode[]
+  vistasLog     Vista[]
+}
+
+// ============================================================
+// OTP CODE — códigos de verificación por WhatsApp
+// ============================================================
+model OtpCode {
+  id        String   @id @default(cuid())
+  usuarioId String?  // si el usuario ya existe
+  whatsapp  String   // número al que se envió
+  codigo    String   // código de 6 dígitos
+  expiraEn  DateTime
+  usado     Boolean  @default(false)
+  intentos  Int      @default(0)
+  createdAt DateTime @default(now())
+
+  usuario Usuario? @relation(fields: [usuarioId], references: [id])
+
+  @@index([whatsapp, usado])
+}
+
+// ============================================================
+// LIKE — un like por usuario por anuncio
+// ============================================================
+model Like {
+  id        String   @id @default(cuid())
+  usuarioId String
+  anuncioId String
+  createdAt DateTime @default(now())
+
+  usuario  Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  anuncio  Anuncio  @relation(fields: [anuncioId], references: [id], onDelete: Cascade)
+
+  @@unique([usuarioId, anuncioId])
+  @@index([anuncioId])
+}
+
+// ============================================================
+// GUARDADO — anuncio guardado en favoritos
+// ============================================================
+model Guardado {
+  id        String   @id @default(cuid())
+  usuarioId String
+  anuncioId String
+  createdAt DateTime @default(now())
+
+  usuario  Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  anuncio  Anuncio  @relation(fields: [anuncioId], references: [id], onDelete: Cascade)
+
+  @@unique([usuarioId, anuncioId])
+  @@index([usuarioId])
+}
+
+// ============================================================
+// VISTA — log de vistas para analítica
+// ============================================================
+model Vista {
+  id        String   @id @default(cuid())
+  anuncioId String
+  usuarioId String?  // null si es visitante anónimo
+  ipHash    String?  // hash de IP para deduplicar vistas anónimas
+  createdAt DateTime @default(now())
+
+  anuncio  Anuncio  @relation(fields: [anuncioId], references: [id], onDelete: Cascade)
+  usuario  Usuario? @relation(fields: [usuarioId], references: [id])
+
+  @@index([anuncioId, createdAt])
+}
+
+// ============================================================
+// REPORTE — denuncias de usuarios sobre anuncios
+// ============================================================
+model Reporte {
+  id          String   @id @default(cuid())
+  anuncioId   String
+  reportanteId String
+  motivo      String   // ENGAÑOSO | ILEGAL | SPAM | NO_RESPONDE | LENGUAJE
+  comentario  String?  // opcional
+  resuelto    Boolean  @default(false)
+  resueltoEn  DateTime?
+  resueltoPor String?  // admin id
+  createdAt   DateTime @default(now())
+
+  anuncio    Anuncio @relation(fields: [anuncioId], references: [id], onDelete: Cascade)
+  reportante Usuario @relation(fields: [reportanteId], references: [id])
+
+  @@index([anuncioId, resuelto])
+  @@index([reportanteId])
+}
+
+// ============================================================
+// PALABRAS PROHIBIDAS — filtro automático de moderación
+// ============================================================
+model PalabraProhibida {
+  id        String   @id @default(cuid())
+  palabra   String   @unique
+  createdAt DateTime @default(now())
 }

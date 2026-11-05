@@ -12,8 +12,8 @@ export function HomeScreen() {
     <div className="animate-fade-in-up pb-2">
       {/* Header — solo el título, sin renglón de subinfo */}
       <header className="px-5 pt-4 pb-3">
-        <h1 className="font-heading italic text-[32px] leading-tight text-[#F5F0E8] font-semibold">
-          Clasificados
+        <h1 className="font-heading italic text-[28px] leading-tight text-[#F5F0E8] font-semibold">
+          Los comunicados de Nina&Vago
         </h1>
       </header>
 

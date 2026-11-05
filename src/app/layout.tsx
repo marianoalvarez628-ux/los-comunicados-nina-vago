@@ -26,10 +26,10 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Folleto Clasificados · Comerciantes del Barrio",
+  title: "Los comunicados de Nina&Vago",
   description:
     "Folleto digital mobile-first donde comerciantes publican sus productos y servicios.",
-  keywords: ["clasificados", "comerciantes", "barrio", "folleto", "mobile"],
+  keywords: ["clasificados", "comerciantes", "barrio", "folleto", "mobile", "Nina&Vago"],
   authors: [{ name: "Z.ai" }],
   icons: {
     icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",

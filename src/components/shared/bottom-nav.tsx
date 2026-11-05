@@ -14,7 +14,7 @@ export function BottomNav() {
   const activeTab: Tab =
     screen.name === "home"
       ? "home"
-      : screen.name === "nuevo" || screen.name === "editor" || screen.name === "registro"
+      : screen.name === "nuevo" || screen.name === "editor" || screen.name === "registro" || screen.name === "mis-anuncios"
       ? "perfil"
       : screen.name === "categoria" || screen.name === "detalle"
       ? "search"
@@ -28,8 +28,8 @@ export function BottomNav() {
       // Logueado como visitante → necesita registrarse como comerciante
       navigate({ name: "registro" });
     } else if (usuario.rol === "COMERCIANTE" || usuario.rol === "ADMIN") {
-      // Ya es comerciante → ir al editor
-      navigate({ name: "nuevo" });
+      // Ya es comerciante → ir al panel de Mis Anuncios (desde ahí puede publicar nuevo)
+      navigate({ name: "mis-anuncios" });
     }
   }
 
@@ -55,8 +55,8 @@ export function BottomNav() {
     },
     {
       id: "perfil",
-      label: usuario ? "Publicar" : "Ingresar",
-      icon: usuario ? Plus : LogIn,
+      label: usuario ? (usuario.rol === "VISITANTE" ? "Publicar" : "Panel") : "Ingresar",
+      icon: usuario ? (usuario.rol === "VISITANTE" ? Plus : Bookmark) : LogIn,
       action: handlePublicarClick,
     },
   ];

@@ -1,60 +1,128 @@
 "use client";
 
 import {
-  ArrowLeft,
-  Camera,
   X,
+  Camera,
   Check,
-  Store,
-  MapPin,
-  Instagram,
-  Phone,
   Image as ImageIcon,
   AlertCircle,
+  ChevronDown,
+  Loader2,
+  Tag,
+  Phone,
 } from "lucide-react";
 import { useNav } from "@/store/nav";
 import { useField, useWordCounter, useImages } from "./editor-hooks";
 import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
 
 const MAX_IMAGES = 4;
 const MAX_WORDS = 90;
-const MAX_TITULO = 24; // aprox 3 palabras
+const MAX_TITULO = 24; // aprox 3 palabras en chars
+
+type CategoriaOption = {
+  id: string; // slug
+  nombre: string;
+  short: string;
+  duracionDias: number;
+};
 
 export function EditorScreen({ editId }: { editId?: string }) {
-  const { back } = useNav();
+  const { navigate, back } = useNav();
   const isEdit = Boolean(editId);
 
-  const nombre = useField("La Esquina");
+  // Campos del anuncio (los datos del comerciante ya los tenemos del registro)
   const titulo = useField("", MAX_TITULO);
-  const direccion = useField("Av. Rivadavia 1234, Caballito");
-  const instagram = useField("@laesquina");
-  const whatsapp = useField("+54 11 5555-1234");
   const descripcion = useField("", 600);
+  const precio = useField("");
+  const [estado, setEstado] = useState<"ABIERTO" | "CERRADO" | "PROMO">("ABIERTO");
+  const [categoriaSlug, setCategoriaSlug] = useState("");
+  const [showCats, setShowCats] = useState(false);
+  const [categorias, setCategorias] = useState<CategoriaOption[]>([]);
+  const [catsLoading, setCatsLoading] = useState(true);
+
   const descCounter = useWordCounter(descripcion.value);
   const tituloPalabras = titulo.value.trim().split(/\s+/).filter(Boolean).length;
-
   const [imagenes, , addImage, removeImage] = useImages(MAX_IMAGES);
+
+  // Estado de publicación
+  const [publicando, setPublicando] = useState(false);
+  const [errorPublicacion, setErrorPublicacion] = useState<string | null>(null);
+
+  // Cargar categorías al montar
+  useEffect(() => {
+    fetch("/api/categorias", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((data) => {
+        setCategorias(data.categorias ?? []);
+        setCatsLoading(false);
+      })
+      .catch((e) => {
+        console.error("Error cargando categorías:", e);
+        setCatsLoading(false);
+      });
+  }, []);
 
   const tituloValido = tituloPalabras >= 1 && tituloPalabras <= 3;
   const descValido = descCounter.count <= MAX_WORDS && descCounter.count > 0;
   const imagenesValido = imagenes.length > 0;
-  const formValido = tituloValido && descValido && imagenesValido && nombre.value.length > 0;
+  const catValida = Boolean(categoriaSlug);
+  const formValido = tituloValido && descValido && imagenesValido && catValida;
 
-  function handleSave() {
-    if (!formValido) return;
-    // En prototipo: volvemos al home
-    setTimeout(() => {
-      back();
-    }, 800);
+  const categoriaElegida = categorias.find((c) => c.id === categoriaSlug);
+
+  async function handleSave() {
+    if (!formValido || publicando) return;
+
+    setPublicando(true);
+    setErrorPublicacion(null);
+
+    try {
+      const res = await fetch("/api/anuncios", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          titulo: titulo.value,
+          descripcion: descripcion.value,
+          categoriaSlug,
+          imagenes,
+          precio: precio.value || undefined,
+          estado,
+        }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErrorPublicacion(data.error || "Error al publicar");
+        setPublicando(false);
+        return;
+      }
+
+      // Éxito: guardar mensaje y volver al Home (con toast de éxito)
+      // TODO: cuando el DetalleScreen se conecte a la DB, navegar al detalle:
+      // navigate({ name: "detalle", anuncioId: data.anuncio.id });
+      try {
+        sessionStorage.setItem("toast_exito", `Anuncio publicado: ${data.anuncio.titulo}. Vence en ${data.anuncio.duracionDias} días.`);
+      } catch {}
+      // Volver al Home (resetear navegación)
+      window.location.href = "/?v=published";
+    } catch (e) {
+      setErrorPublicacion("No se pudo conectar con el servidor");
+      setPublicando(false);
+    }
+  }
+
+  function handleClose() {
+    back();
   }
 
   return (
-    <div className="animate-slide-in-right pb-2">
+    <div className="animate-slide-in-right pb-2 min-h-screen">
       {/* Header */}
-      <header className="px-4 pt-2 pb-3 border-b border-white/5 flex items-center justify-between">
+      <header className="px-4 pt-2 pb-3 border-b border-white/5 flex items-center justify-between sticky top-0 bg-[#14141A]/95 backdrop-blur z-10">
         <button
-          onClick={back}
-          className="text-[#FF6B5C] active:scale-95 transition-transform p-1 -ml-1"
+          onClick={handleClose}
+          className="text-[#8A8579] hover:text-[#F5F0E8] transition-colors p-1 -ml-1"
           aria-label="Cancelar"
         >
           <X size={20} />
@@ -64,21 +132,38 @@ export function EditorScreen({ editId }: { editId?: string }) {
         </h1>
         <button
           onClick={handleSave}
-          disabled={!formValido}
+          disabled={!formValido || publicando}
           className={cn(
             "inline-flex items-center gap-1 text-[12px] font-semibold px-3 py-1.5 rounded-lg transition-all",
-            formValido
+            formValido && !publicando
               ? "bg-[#FF6B5C] text-[#14141A] active:scale-95"
               : "bg-[#2A2A33] text-[#5A554A] cursor-not-allowed"
           )}
         >
-          <Check size={14} />
-          {isEdit ? "Guardar" : "Publicar"}
+          {publicando ? (
+            <>
+              <Loader2 size={14} className="animate-spin" />
+              Publicando...
+            </>
+          ) : (
+            <>
+              <Check size={14} />
+              {isEdit ? "Guardar" : "Publicar"}
+            </>
+          )}
         </button>
       </header>
 
       <div className="px-4 pt-3 pb-4 space-y-4">
-        {/* Hero images (4 max) */}
+        {/* Error de publicación */}
+        {errorPublicacion && (
+          <div className="bg-[#FF6B5C]/10 border border-[#FF6B5C]/30 rounded-lg px-3 py-2.5 flex items-start gap-2">
+            <AlertCircle size={14} className="text-[#FF6B5C] flex-shrink-0 mt-0.5" />
+            <p className="text-[11px] text-[#FF6B5C] leading-snug flex-1">{errorPublicacion}</p>
+          </div>
+        )}
+
+        {/* 01. Imágenes del anuncio */}
         <section>
           <SectionLabel
             num="01"
@@ -123,7 +208,6 @@ export function EditorScreen({ editId }: { editId?: string }) {
                 </span>
               </button>
             )}
-            {/* Placeholders vacíos */}
             {Array.from({ length: Math.max(0, MAX_IMAGES - imagenes.length - 1) }).map(
               (_, i) => (
                 <div
@@ -138,35 +222,100 @@ export function EditorScreen({ editId }: { editId?: string }) {
           </p>
         </section>
 
-        {/* Nombre del comercio */}
+        {/* 02. Categoría */}
         <section>
           <SectionLabel
             num="02"
-            icon={<Store size={11} />}
-            label="Nombre del comercio"
+            icon={<Tag size={11} />}
+            label="Categoría"
+            hint={categoriaElegida ? `${categoriaElegida.duracionDias} días` : undefined}
+            hintTone={categoriaElegida ? "ok" : "muted"}
           />
-          <input
-            type="text"
-            value={nombre.value}
-            onChange={nombre.onChange}
-            placeholder="Ej: La Esquina"
-            className="mt-2 w-full bg-[#1E1E26] border border-white/8 rounded-lg px-3 py-2.5 text-[13px] text-[#F5F0E8] placeholder:text-[#5A554A] focus:outline-none focus:border-[#FF6B5C]/40 transition-colors"
-          />
+          <button
+            onClick={() => setShowCats((v) => !v)}
+            className={cn(
+              "mt-2 w-full bg-[#1E1E26] border rounded-lg px-3 py-2.5 text-left flex items-center justify-between transition-colors",
+              categoriaSlug
+                ? "border-[#FF6B5C]/30 text-[#F5F0E8]"
+                : "border-white/8 text-[#5A554A]"
+            )}
+          >
+            <span className="text-[13px] truncate">
+              {categoriaElegida
+                ? categoriaElegida.nombre
+                : catsLoading
+                ? "Cargando categorías..."
+                : "Elegí la categoría"}
+            </span>
+            <ChevronDown
+              size={14}
+              className={cn("text-[#8A8579] transition-transform", showCats && "rotate-180")}
+            />
+          </button>
+          {showCats && (
+            <div className="bg-[#1E1E26] border border-white/8 rounded-lg overflow-hidden mt-1 max-h-64 overflow-y-auto">
+              {categorias.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => {
+                    setCategoriaSlug(cat.id);
+                    setShowCats(false);
+                    setErrorPublicacion(null);
+                  }}
+                  className={cn(
+                    "w-full px-3 py-2.5 text-left border-b border-white/5 last:border-b-0 transition-colors flex items-center justify-between",
+                    cat.id === categoriaSlug
+                      ? "bg-[#FF6B5C]/10"
+                      : "hover:bg-[#2A2A33]"
+                  )}
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[12px] text-[#F5F0E8] font-medium">{cat.nombre}</p>
+                    <p className="text-[9.5px] text-[#8A8579] mt-0.5">
+                      Anuncios duran {cat.duracionDias} días
+                    </p>
+                  </div>
+                  {cat.id === categoriaSlug && <Check size={14} className="text-[#FF6B5C]" />}
+                </button>
+              ))}
+            </div>
+          )}
         </section>
 
-        {/* Título (máx 3 palabras) */}
+        {/* 03. Estado */}
+        <section>
+          <SectionLabel num="03" icon={<Check size={11} />} label="Estado del anuncio" />
+          <div className="mt-2 flex gap-2">
+            {(["ABIERTO", "CERRADO", "PROMO"] as const).map((est) => (
+              <button
+                key={est}
+                onClick={() => setEstado(est)}
+                className={cn(
+                  "flex-1 py-2 rounded-lg text-[10.5px] font-bold tracking-wide transition-all border",
+                  estado === est
+                    ? est === "ABIERTO"
+                      ? "bg-[#5CD9A0]/15 text-[#5CD9A0] border-[#5CD9A0]/40"
+                      : est === "CERRADO"
+                      ? "bg-[#FF6B5C]/15 text-[#FF6B5C] border-[#FF6B5C]/40"
+                      : "bg-[#FFB547]/15 text-[#FFB547] border-[#FFB547]/40"
+                    : "bg-[#2A2A33] text-[#8A8579] border-white/5"
+                )}
+              >
+                {est}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* 04. Título */}
         <section>
           <SectionLabel
-            num="03"
+            num="04"
             icon={<ImageIcon size={11} />}
             label="Título del anuncio"
             hint={`${tituloPalabras}/3 palabras`}
             hintTone={
-              tituloPalabras === 0
-                ? "muted"
-                : tituloValido
-                ? "ok"
-                : "warn"
+              tituloPalabras === 0 ? "muted" : tituloValido ? "ok" : "warn"
             }
           />
           <input
@@ -184,70 +333,35 @@ export function EditorScreen({ editId }: { editId?: string }) {
           )}
         </section>
 
-        {/* Dirección */}
+        {/* 05. Precio (opcional) */}
         <section>
           <SectionLabel
-            num="04"
-            icon={<MapPin size={11} />}
-            label="Dirección"
+            num="05"
+            icon={<Tag size={11} />}
+            label="Precio"
+            hint="opcional"
           />
           <input
             type="text"
-            value={direccion.value}
-            onChange={direccion.onChange}
-            placeholder="Calle y número, barrio"
-            className="mt-2 w-full bg-[#1E1E26] border border-white/8 rounded-lg px-3 py-2.5 text-[13px] text-[#F5F0E8] placeholder:text-[#5A554A] focus:outline-none focus:border-[#FF6B5C]/40 transition-colors"
+            value={precio.value}
+            onChange={precio.onChange}
+            placeholder="Ej: $1.250"
+            className="mt-2 w-full bg-[#1E1E26] border border-white/8 rounded-lg px-3 py-2.5 text-[13px] text-[#F5F0E8] placeholder:text-[#5A554A] focus:outline-none focus:border-[#FF6B5C]/40 transition-colors font-num"
           />
         </section>
 
-        {/* Instagram + WhatsApp en grilla 2 columnas */}
-        <section className="grid grid-cols-2 gap-3">
-          <div>
-            <SectionLabel
-              num="05"
-              icon={<Instagram size={11} />}
-              label="Instagram"
-            />
-            <input
-              type="text"
-              value={instagram.value}
-              onChange={instagram.onChange}
-              placeholder="@usuario"
-              className="mt-2 w-full bg-[#1E1E26] border border-white/8 rounded-lg px-3 py-2.5 text-[12.5px] text-[#F5F0E8] placeholder:text-[#5A554A] focus:outline-none focus:border-[#FF6B5C]/40 transition-colors"
-            />
-          </div>
-          <div>
-            <SectionLabel
-              num="06"
-              icon={<Phone size={11} />}
-              label="WhatsApp"
-            />
-            <input
-              type="tel"
-              value={whatsapp.value}
-              onChange={whatsapp.onChange}
-              placeholder="+54 11 ..."
-              className="mt-2 w-full bg-[#1E1E26] border border-white/8 rounded-lg px-3 py-2.5 text-[12.5px] text-[#F5F0E8] placeholder:text-[#5A554A] focus:outline-none focus:border-[#FF6B5C]/40 transition-colors"
-            />
-          </div>
-        </section>
-
-        {/* Descripción con contador */}
+        {/* 06. Descripción */}
         <section>
           <SectionLabel
-            num="07"
+            num="06"
             icon={<ImageIcon size={11} />}
             label="Descripción"
             hint={`${descCounter.count}/${MAX_WORDS} palabras`}
             hintTone={
-              descCounter.count === 0
-                ? "muted"
-                : descValido
-                ? "ok"
-                : "warn"
+              descCounter.count === 0 ? "muted" : descValido ? "ok" : "warn"
             }
           />
-          <div className="mt-2 relative">
+          <div className="mt-2">
             <textarea
               value={descripcion.value}
               onChange={descripcion.onChange}
@@ -255,7 +369,6 @@ export function EditorScreen({ editId }: { editId?: string }) {
               rows={5}
               className="w-full bg-[#1E1E26] border border-white/8 rounded-lg px-3 py-2.5 text-[12.5px] leading-[1.55] text-[#F5F0E8] placeholder:text-[#5A554A] focus:outline-none focus:border-[#FF6B5C]/40 transition-colors resize-none desc-box"
             />
-            {/* Barra de progreso */}
             <div className="mt-2 h-1 bg-[#2A2A33] rounded-full overflow-hidden">
               <div
                 className={cn(
@@ -280,31 +393,41 @@ export function EditorScreen({ editId }: { editId?: string }) {
           )}
         </section>
 
-        {/* Preview card mini */}
+        {/* 07. Vista previa en vivo */}
         <section>
           <SectionLabel
-            num="08"
+            num="07"
             icon={<ImageIcon size={11} />}
             label="Vista previa"
           />
           <div className="mt-2 bg-[#1E1E26] rounded-xl p-3 border border-white/5 border-l-[3px] border-l-[#FF6B5C]">
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-7 h-7 rounded-full bg-[#2A2A33] flex items-center justify-center text-[#FF6B5C] text-[10px] font-bold">
-                {nombre.value.charAt(0) || "?"}
-              </div>
-              <span className="text-[12px] font-semibold text-[#F5F0E8] flex-1">
-                {nombre.value || "Tu comercio"}
+              <span
+                className={cn(
+                  "text-[8px] px-2 py-0.5 rounded-full border font-bold tracking-wide",
+                  estado === "ABIERTO"
+                    ? "bg-[#5CD9A0]/12 text-[#5CD9A0] border-[#5CD9A0]/30"
+                    : estado === "CERRADO"
+                    ? "bg-[#FF6B5C]/12 text-[#FF6B5C] border-[#FF6B5C]/30"
+                    : "bg-[#FFB547]/12 text-[#FFB547] border-[#FFB547]/30"
+                )}
+              >
+                {estado}
               </span>
+              {categoriaElegida && (
+                <span className="text-[9px] text-[#8A8579]">
+                  {categoriaElegida.short} · {categoriaElegida.duracionDias} días
+                </span>
+              )}
             </div>
             <h3 className="font-heading italic text-[14px] text-[#F5F0E8] leading-tight">
               {titulo.value || "Tu título (máx 3 palabras)"}
             </h3>
-            <div className="mt-1.5 flex items-center gap-2 text-[9.5px] text-[#8A8579]">
-              <span className="inline-flex items-center gap-1">
-                <MapPin size={9} className="text-[#FF6B5C]" />
-                {direccion.value || "Tu dirección"}
-              </span>
-            </div>
+            {precio.value && (
+              <p className="text-[14px] text-[#FF6B5C] font-num font-semibold mt-1">
+                {precio.value}
+              </p>
+            )}
             <div className="desc-box mt-2">
               <p className="text-[10.5px] leading-[1.5] text-[#C9C2B6] line-clamp-2">
                 {descripcion.value ||
@@ -317,7 +440,14 @@ export function EditorScreen({ editId }: { editId?: string }) {
         {/* Submit hint */}
         <div className="text-center pt-2">
           <p className="text-[9.5px] text-[#5A554A]">
-            Al publicar, el anuncio aparece visible en la categoría de tu rubro.
+            Al publicar, el anuncio aparece visible en la categoría elegida.
+            {categoriaElegida && (
+              <>
+                {" "}
+                Vence en {categoriaElegida.duracionDias} días. Podés republicarlo
+                después.
+              </>
+            )}
           </p>
         </div>
       </div>

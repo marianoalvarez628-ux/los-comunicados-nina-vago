@@ -174,8 +174,9 @@ export async function POST(request: Request) {
     if (anunciosActivos >= MAX_ANUNCIOS) {
       return NextResponse.json(
         {
-          error: `Ya tenés ${MAX_ANUNCIOS} anuncios activos. Eliminá o pausá uno para publicar uno nuevo.`,
+          error: `Ya tenés ${anunciosActivos} anuncios activos (máximo ${MAX_ANUNCIOS}). Eliminá o pausá uno para publicar uno nuevo.`,
           anunciosActivos,
+          maxAnuncios: MAX_ANUNCIOS,
         },
         { status: 400 }
       );

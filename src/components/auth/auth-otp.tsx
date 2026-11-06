@@ -1,11 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, ArrowLeft, ArrowRight, Loader2, RefreshCw } from "lucide-react";
 import { useAuth } from "@/store/auth";
 import { cn } from "@/lib/utils";
-
-const MODO_DESARROLLO = process.env.NODE_ENV !== "production";
 
 export function AuthOtpScreen() {
   const { closeAuth, openLogin, whatsappPendiente, refresh, closeAuth: closeAll } = useAuth();
@@ -15,11 +13,18 @@ export function AuthOtpScreen() {
   const [intentosRestantes, setIntentosRestantes] = useState<number | null>(null);
   const [reenviando, setReenviando] = useState(false);
 
-  // En modo desarrollo: leemos el código del sessionStorage para mostrarlo
-  const codigoDesarrollo =
-    MODO_DESARROLLO && typeof window !== "undefined"
-      ? sessionStorage.getItem("otp_codigo_desarrollo")
-      : null;
+  // SIEMPRE leer el código del sessionStorage (el backend lo guarda ahí
+  // cuando Twilio no está configurado, incluso en producción)
+  const [codigoDesarrollo, setCodigoDev] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = sessionStorage.getItem("otp_codigo_desarrollo");
+      if (stored) {
+        setCodigoDev(stored);
+      }
+    }
+  }, []);
 
   function handleCodigoChange(i: number, value: string) {
     // Solo dígitos, máximo 1
@@ -121,11 +126,10 @@ export function AuthOtpScreen() {
         return;
       }
 
-      // En desarrollo, actualizar el código guardado
+      // Actualizar el código guardado (siempre, incluso en producción sin Twilio)
       if (data.codigoDesarrollo && typeof window !== "undefined") {
         sessionStorage.setItem("otp_codigo_desarrollo", data.codigoDesarrollo);
-        // Forzar re-render para mostrar el nuevo código
-        setCodigo([...codigo]);
+        setCodigoDev(data.codigoDesarrollo);
       }
 
       setIntentosRestantes(null);
@@ -171,14 +175,17 @@ export function AuthOtpScreen() {
             {whatsappPendiente}
           </p>
 
-          {/* Aviso modo desarrollo */}
+          {/* Aviso de código en pantalla (modo testing sin Twilio) */}
           {codigoDesarrollo && (
             <div className="mb-4 p-3 bg-[#FFB547]/10 border border-[#FFB547]/30 rounded-lg">
               <p className="text-[10px] font-bold text-[#FFB547] tracking-wide uppercase mb-1">
-                🔧 Modo desarrollo
+                📱 Tu código de verificación
               </p>
               <p className="text-[11px] text-[#C9C2B6]">
                 Tu código es: <span className="font-num font-bold text-[#FFB547] text-[14px] tracking-wider">{codigoDesarrollo}</span>
+              </p>
+              <p className="text-[9px] text-[#8A8579] mt-1">
+                (Cuando configures Twilio, este código llegará por WhatsApp automáticamente)
               </p>
             </div>
           )}

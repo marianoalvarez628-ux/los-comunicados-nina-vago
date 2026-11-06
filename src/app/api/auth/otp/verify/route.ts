@@ -7,8 +7,20 @@ import { db } from "@/lib/db";
 
 const MAX_INTENTOS = 3;
 
+// Normaliza el formato del WhatsApp (igual que en /otp/send)
+// Si no empieza con +, asume Argentina (+54)
 function normalizarWhatsapp(w: string): string {
-  return w.replace(/[\s\-()]/g, "").trim();
+  let limpio = w.replace(/[\s\-()]/g, "").trim();
+  if (!limpio.startsWith("+")) {
+    if (limpio.length === 10 && /^\d+$/.test(limpio)) {
+      limpio = "+54" + limpio;
+    } else if (limpio.length === 11 && /^\d+$/.test(limpio)) {
+      limpio = "+54" + limpio;
+    } else if (limpio.startsWith("54")) {
+      limpio = "+" + limpio;
+    }
+  }
+  return limpio;
 }
 
 export async function POST(request: Request) {

@@ -111,13 +111,24 @@ export async function POST(request: Request) {
     }
 
     // Producción con Twilio: enviar WhatsApp real
-    // const twilio = require("twilio");
-    // const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-    // await client.messages.create({
-    //   from: `whatsapp:${process.env.TWILIO_WHATSAPP_FROM}`,
-    //   to: `whatsapp:${whatsapp}`,
-    //   body: `Tu código de Los comunicados de Nina&Vago es: ${codigo}`,
-    // });
+    const twilio = require("twilio");
+    const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+    try {
+      await client.messages.create({
+        from: `whatsapp:${process.env.TWILIO_WHATSAPP_FROM}`,
+        to: `whatsapp:${whatsapp}`,
+        body: `Tu código de Los comunicados de Nina&Vago es: ${codigo}`,
+      });
+    } catch (twilioError) {
+      console.error("Error enviando WhatsApp:", twilioError);
+      // Si falla Twilio, devolver el código en la response como fallback
+      return NextResponse.json({
+        ok: true,
+        message: "Código generado (Twilio falló — mostrando en pantalla)",
+        codigoDesarrollo: codigo,
+        expiraEn,
+      });
+    }
 
     return NextResponse.json({
       ok: true,

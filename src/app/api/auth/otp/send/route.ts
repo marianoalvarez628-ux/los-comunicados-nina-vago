@@ -110,24 +110,35 @@ export async function POST(request: Request) {
       });
     }
 
-    // Producción con Twilio: enviar WhatsApp real
+    // Producción con Twilio: enviar por SMS (más confiable que WhatsApp sandbox)
     const twilio = require("twilio");
     const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
     try {
+      // Intentar primero por WhatsApp
       await client.messages.create({
         from: `whatsapp:${process.env.TWILIO_WHATSAPP_FROM}`,
         to: `whatsapp:${whatsapp}`,
         body: `Tu código de Los comunicados de Nina&Vago es: ${codigo}`,
       });
-    } catch (twilioError) {
-      console.error("Error enviando WhatsApp:", twilioError);
-      // Si falla Twilio, devolver el código en la response como fallback
-      return NextResponse.json({
-        ok: true,
-        message: "Código generado (Twilio falló — mostrando en pantalla)",
-        codigoDesarrollo: codigo,
-        expiraEn,
-      });
+    } catch (whatsappError) {
+      console.error("WhatsApp falló, intentando SMS:", whatsappError.message);
+      // Si WhatsApp falla, intentar por SMS
+      try {
+        await client.messages.create({
+          from: process.env.TWILIO_WHATSAPP_FROM,
+          to: whatsapp,
+          body: `Tu codigo de Los comunicados de Nina&Vago es: ${codigo}`,
+        });
+      } catch (smsError) {
+        console.error("SMS también falló:", smsError.message);
+        // Si ambos fallan, devolver el código en la response como fallback
+        return NextResponse.json({
+          ok: true,
+          message: "Código generado (Twilio falló — mostrando en pantalla)",
+          codigoDesarrollo: codigo,
+          expiraEn,
+        });
+      }
     }
 
     return NextResponse.json({

@@ -31,8 +31,10 @@ export const metadata: Metadata = {
     "Folleto digital mobile-first donde comerciantes publican sus productos y servicios.",
   keywords: ["clasificados", "comerciantes", "barrio", "folleto", "mobile", "Nina&Vago"],
   authors: [{ name: "Z.ai" }],
+  manifest: "/manifest.json",
   icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+    icon: "/categorias/compra-venta.png",
+    apple: "/categorias/compra-venta.png",
   },
 };
 
@@ -41,6 +43,11 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   themeColor: "#14141A",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Nina&Vago",
+  },
 };
 
 export default function RootLayout({

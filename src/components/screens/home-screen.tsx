@@ -1,12 +1,25 @@
 "use client";
 
-import { Search, ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { Search, ChevronRight, X } from "lucide-react";
 import { useNav } from "@/store/nav";
 import { categorias, countAnunciosByCategoria } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export function HomeScreen() {
   const { navigate } = useNav();
+  const [busqueda, setBusqueda] = useState("");
+
+  // Filtrar categorías según la búsqueda
+  const catsFiltradas = categorias.filter((cat) => {
+    if (!busqueda.trim()) return true;
+    const q = busqueda.toLowerCase().trim();
+    return (
+      cat.nombre.toLowerCase().includes(q) ||
+      cat.short.toLowerCase().includes(q) ||
+      cat.descripcion.toLowerCase().includes(q)
+    );
+  });
 
   return (
     <div className="animate-fade-in-up pb-2">
@@ -17,31 +30,42 @@ export function HomeScreen() {
         </h1>
       </header>
 
-      {/* Search bar */}
+      {/* Search bar funcional */}
       <div className="px-5 pb-4">
-        <div className="flex items-center gap-2 rounded-full bg-[#2A2A33] px-4 py-2.5 border border-white/5">
-          <Search size={14} className="text-[#FF6B5C]" />
+        <div className="flex items-center gap-2 rounded-full bg-[#2A2A33] px-4 py-2.5 border border-white/5 focus-within:border-[#FF6B5C]/30 transition-colors">
+          <Search size={14} className="text-[#FF6B5C] flex-shrink-0" />
           <input
             type="text"
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
             placeholder="Buscar producto, servicio o categoría..."
             className="flex-1 bg-transparent border-0 outline-none text-[12px] text-[#F5F0E8] placeholder:text-[#5A554A]"
           />
+          {busqueda && (
+            <button
+              onClick={() => setBusqueda("")}
+              className="text-[#8A8579] hover:text-[#F5F0E8] transition-colors flex-shrink-0"
+              aria-label="Limpiar búsqueda"
+            >
+              <X size={14} />
+            </button>
+          )}
         </div>
       </div>
 
       {/* Section label */}
       <div className="px-5 pb-3 flex items-center justify-between">
         <h2 className="text-[10px] font-bold tracking-[0.18em] text-[#8A8579] uppercase">
-          Categorías
+          {busqueda ? "Resultados" : "Categorías"}
         </h2>
         <span className="text-[10px] text-[#8A8579]">
-          {categorias.length} tipos
+          {catsFiltradas.length} {busqueda ? "encontrados" : "tipos"}
         </span>
       </div>
 
-      {/* Lista de categorías — cada una con imagen de referencia grande */}
+      {/* Lista de categorías filtradas */}
       <div className="px-5 flex flex-col gap-2.5">
-        {categorias.map((cat) => {
+        {catsFiltradas.map((cat) => {
           const count = countAnunciosByCategoria(cat.id);
           return (
             <button
@@ -57,9 +81,9 @@ export function HomeScreen() {
               )}
               style={{ WebkitTapHighlightColor: "transparent" }}
             >
-              {/* Imagen de referencia — rectangular, no circular */}
+              {/* Imagen de referencia */}
               <div className="w-[88px] h-[88px] flex-shrink-0 overflow-hidden bg-[#2A2A33]">
-                { }
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={cat.imagen}
                   alt={cat.nombre}
@@ -90,12 +114,30 @@ export function HomeScreen() {
         })}
       </div>
 
+      {/* Sin resultados */}
+      {catsFiltradas.length === 0 && (
+        <div className="px-5 py-12 text-center">
+          <Search size={28} className="mx-auto mb-3 text-[#3A3A44]" />
+          <p className="text-[13px] text-[#8A8579]">
+            No encontramos categorías para &quot;{busqueda}&quot;
+          </p>
+          <button
+            onClick={() => setBusqueda("")}
+            className="mt-3 text-[12px] text-[#FF6B5C] font-semibold underline"
+          >
+            Limpiar búsqueda
+          </button>
+        </div>
+      )}
+
       {/* Footer hint */}
-      <div className="px-5 mt-5 text-center">
-        <p className="text-[10px] text-[#5A554A] tracking-wide">
-          Tocá una categoría para ver sus anuncios
-        </p>
-      </div>
+      {catsFiltradas.length > 0 && (
+        <div className="px-5 mt-5 text-center">
+          <p className="text-[10px] text-[#5A554A] tracking-wide">
+            Tocá una categoría para ver sus anuncios
+          </p>
+        </div>
+      )}
     </div>
   );
 }
